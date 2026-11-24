@@ -189,7 +189,10 @@ function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math
 function go(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');mode=id==='learn'?'study':id==='play'?'play':'';if(id==='report')renderReport()}
 function card(s){return `<div class="card"><div class="icon">${s.icon}</div><h3>${s.name}</h3><p>${s.desc}</p><button class="primary" onclick="openSubject('${s.id}')">Jelajahi</button></div>`}
 subjectsDiv();
-function subjectsDiv(){subjectsEl.innerHTML=subjects.map(card).join('');homeCards.innerHTML=subjects.map(card).join('')}
+function subjectsDiv(){
+  document.getElementById('subjects').innerHTML=subjects.map(card).join('');
+  document.getElementById('homeCards').innerHTML=subjects.map(card).join('');
+}
 function openSubject(id){chosen=subjects.find(s=>s.id===id);mode='study';lessonPanel.classList.remove('hidden');lessonPanel.innerHTML=`<button class="back" onclick="lessonPanel.classList.add('hidden')">← Kembali</button><h2>${chosen.icon} ${chosen.name}</h2>${chosen.lessons.map((l,i)=>`<div class="lesson"><h3>📘 ${i+1}. ${l[0]}</h3><p>${l[1]}</p><b>Contoh:</b> ${l[2]}</div>`).join('')}<button class="primary wide" onclick="startQuiz('${id}')">Mulai Kuis 15 Soal ⭐</button>`;lessonPanel.scrollIntoView({behavior:'smooth'})}
 function startQuiz(id){chosen=subjects.find(s=>s.id===id);quiz=shuffle(chosen.q).slice(0,15);qi=0;score=0;showQ()}
 function showQ(){let q=quiz[qi];opts=shuffle(q[1].map((v,i)=>({v,ok:i===q[2]})));lessonPanel.innerHTML=`<button class="back" onclick="openSubject('${chosen.id}')">← Kembali</button><h2>⭐ Kuis ${chosen.name}</h2><div class="progress"><span style="width:${qi/15*100}%"></span></div><p>Soal ${qi+1} dari 15</p><div class="question">${q[0]}</div><div class="answers">${opts.map((o,i)=>`<button class="answer" onclick="answerQ(${i})">${'ABC'[i]}. ${o.v}</button>`).join('')}</div><div id="feedback"></div>`}
