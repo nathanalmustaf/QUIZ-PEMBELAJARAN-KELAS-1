@@ -8,6 +8,105 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+
+.stats{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:8px;
+ margin-top:12px;
+}
+
+.stats .panel{
+ text-align:center;
+ padding:15px 5px;
+}
+
+.stats h3{
+ color:#f02d70;
+ font:22px Orbitron;
+}
+
+.navbar{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:7px;
+ margin-top:15px;
+ padding:7px;
+ background:#211d27;
+ border:1px solid #563244;
+ border-radius:13px;
+}
+
+.nav-btn{
+ padding:12px 3px;
+ background:transparent;
+ color:#bbaab5;
+ border:0;
+ border-radius:8px;
+ font-size:10px;
+ font-weight:bold;
+}
+
+.nav-btn.active{
+ background:#a91d46;
+ color:white;
+}
+
+.panel{
+ padding:16px;
+ margin-top:12px;
+ background:#211d27;
+ border:1px solid #563244;
+ border-radius:14px;
+}
+
+.panel h2,.panel h3{
+ font-family:Anton;
+ letter-spacing:1px;
+ margin-bottom:9px;
+}
+
+.panel p{
+ color:#c7b9c3;
+ font-size:11px;
+ line-height:1.8;
+}
+
+.track{
+ height:9px;
+ background:#100b10;
+ border-radius:20px;
+ overflow:hidden;
+ margin-top:10px;
+}
+
+.fill{
+ height:100%;
+ background:linear-gradient(90deg,#a91d46,#f02d70);
+ border-radius:20px;
+}
+
+.mission-reward{
+ color:#00dfa0!important;
+ font:10px Orbitron;
+ margin-top:10px;
+}
+
+.profile-big{
+ text-align:center;
+ padding:25px;
+}
+
+.profile-big h2{
+ font:28px Anton;
+}
+
+.profile-big .avatar{
+ font-size:45px;
+ margin-bottom:10px;
+}
+
+
 <style>
 *{
  margin:0;
@@ -308,8 +407,261 @@ footer b{
 </section>
 
 <script>
-/* JAVASCRIPT AKAN DITAMBAHKAN PADA TAHAP 2 */
-</script>
+
+let player = "";
+let data = JSON.parse(localStorage.getItem("ska_data")) || {
+ xp: 0,
+ coins: 0,
+ lessonDone: []
+};
+
+function saveData(){
+ localStorage.setItem("ska_data",JSON.stringify(data));
+}
+
+function safe(text){
+ return String(text).replace(/[&<>"']/g,function(c){
+  return {
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#39;"
+  }[c];
+ });
+}
+
+function greeting(){
+ const name=player.toLowerCase();
+
+ if(name==="haura"){
+  return "Halo cantik ini cuman uji coba tugas maaf kalo gari dan membosan kan yaaa love youuu";
+ }
+
+ if(name==="azkara"){
+  return "Halo boy kamu adalah owner semangat ujian nya ya";
+ }
+
+ return "Selamat datang di Smart Kids Adventure! Siap belajar dan bermain hari ini?";
+}
+
+function playSound(){
+ if(!("speechSynthesis" in window)) return;
+
+ const name=player.toLowerCase();
+
+ if(name!=="haura" && name!=="azkara") return;
+
+ const message=greeting();
+
+ const voices=window.speechSynthesis.getVoices();
+ const indo=voices.filter(v=>v.lang.toLowerCase().includes("id"));
+
+ let voice=null;
+
+ if(name==="haura"){
+  voice=indo.find(v=>/female|woman|perempuan/i.test(v.name));
+ }else{
+  voice=indo.find(v=>/male|man|laki/i.test(v.name));
+ }
+
+ if(!voice) voice=indo[0] || voices[0];
+
+ // Efek elektronik pembuka
+ try{
+  const AudioCtx=window.AudioContext || window.webkitAudioContext;
+  if(AudioCtx){
+   const ctx=new AudioCtx();
+   const osc=ctx.createOscillator();
+   const gain=ctx.createGain();
+
+   osc.type="sine";
+   osc.frequency.setValueAtTime(660,ctx.currentTime);
+   osc.frequency.exponentialRampToValueAtTime(330,ctx.currentTime+0.35);
+
+   gain.gain.setValueAtTime(0.12,ctx.currentTime);
+   gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.4);
+
+   osc.connect(gain);
+   gain.connect(ctx.destination);
+
+   osc.start();
+   osc.stop(ctx.currentTime+0.4);
+  }
+ }catch(e){}
+
+ const utterance=new SpeechSynthesisUtterance(message);
+ utterance.lang="id-ID";
+ utterance.rate=name==="haura"?0.9:0.82;
+ utterance.pitch=name==="haura"?1.15:0.75;
+ utterance.volume=1;
+
+ if(voice) utterance.voice=voice;
+
+ setTimeout(()=>{
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+ },450);
+}
+
+function login(){
+ const input=document.getElementById("playerName");
+ const warning=document.getElementById("loginWarning");
+
+ player=input.value.trim();
+
+ if(!player){
+  warning.textContent="MASUKKAN NAMA PEMAIN TERLEBIH DAHULU!";
+  return;
+ }
+
+ localStorage.setItem("ska_player",player);
+
+ playSound();
+ showDashboard();
+}
+
+function showDashboard(){
+ document.getElementById("loginPage").style.display="none";
+ document.getElementById("homePage").style.display="block";
+ renderTab("home");
+}
+
+function renderTab(tab){
+ const level=Math.floor(data.xp/100)+1;
+ const progress=data.xp%100;
+ const done=data.lessonDone.length;
+
+ let content="";
+
+ if(tab==="home"){
+  content=`
+   <div class="panel">
+    <h2>WELCOME TO THE ARENA</h2>
+    <h1>HALO, ${safe(player.toUpperCase())}!</h1>
+    <p>${safe(greeting())}</p>
+   </div>
+
+   <div class="stats">
+    <div class="panel"><h3>${data.xp}</h3><p>XP</p></div>
+    <div class="panel"><h3>${data.coins}</h3><p>KOIN</p></div>
+    <div class="panel"><h3>${level}</h3><p>LEVEL</p></div>
+   </div>
+
+   <div class="panel">
+    <h3>LEVEL PROGRESS</h3>
+    <p>${progress}/100 XP</p>
+    <div class="track">
+     <div class="fill" style="width:${progress}%"></div>
+    </div>
+   </div>
+
+   <h2>○ COMMAND CENTER</h2>
+
+   <div class="panel">
+    <h3>🎯 DAILY MISSION</h3>
+    <p>Selesaikan materi pembelajaran hari ini.</p>
+    <p class="mission-reward">HADIAH: 10 XP + 5 KOIN</p>
+   </div>
+
+   <div class="panel">
+    <h3>📚 LEARNING PROGRESS</h3>
+    <p>${done} materi telah diselesaikan.</p>
+   </div>
+
+   <div class="panel">
+    <h3>🚀 UPCOMING MISSIONS</h3>
+    <p>📖 Learning Arena</p>
+    <p>🎯 Quiz Challenge</p>
+    <p>🧩 Mini Games</p>
+   </div>`;
+ }
+
+ if(tab==="mission"){
+  content=`
+   <h2>△ MISSION BOARD</h2>
+   <div class="panel">
+    <h3>MISSION 01 · BELAJAR</h3>
+    <p>Pelajari lima mata pelajaran kelas 3 SD.</p>
+    <p class="mission-reward">TARGET: 15 MATERI</p>
+   </div>
+   <div class="panel">
+    <h3>MISSION 02 · QUIZ</h3>
+    <p>Jawab soal untuk menguji pengetahuanmu.</p>
+    <p class="mission-reward">SEGERA HADIR</p>
+   </div>
+   <div class="panel">
+    <h3>MISSION 03 · MINI GAMES</h3>
+    <p>Mainkan permainan edukasi.</p>
+    <p class="mission-reward">SEGERA HADIR</p>
+   </div>`;
+ }
+
+ if(tab==="profile"){
+  content=`
+   <div class="panel profile-big">
+    <div class="avatar">🎭</div>
+    <h2>${safe(player.toUpperCase())}</h2>
+    <p>SMART KIDS ADVENTURE PLAYER</p>
+   </div>
+
+   <div class="panel">
+    <h3>PLAYER RECORD</h3>
+    <p>Total XP: ${data.xp}</p>
+    <p>Total koin: ${data.coins}</p>
+    <p>Level: ${level}</p>
+    <p>Materi selesai: ${done}</p>
+   </div>
+
+   <button class="main-btn" onclick="changePlayer()">
+    GANTI PEMAIN
+   </button>`;
+ }
+
+ document.getElementById("dashboard").innerHTML=`
+  <div class="topbar">
+   <h2>SMART <span>KIDS</span></h2>
+   <div class="status">PLAYER STATUS<br>ACTIVE ●</div>
+  </div>
+
+  <div class="profile">
+   <div class="avatar">🎭</div>
+   <div class="profile-info">
+    <small>PLAYER PROFILE</small>
+    <b>${safe(player.toUpperCase())}</b>
+   </div>
+   <span style="color:#00dfa0">●</span>
+  </div>
+
+  <div class="navbar">
+   <button class="nav-btn ${tab==="home"?"active":""}" onclick="renderTab('home')">⌂ BERANDA</button>
+   <button class="nav-btn ${tab==="mission"?"active":""}" onclick="renderTab('mission')">△ MISI</button>
+   <button class="nav-btn ${tab==="profile"?"active":""}" onclick="renderTab('profile')">□ PROFIL</button>
+  </div>
+
+  ${content}
+
+  <footer>
+   SMART KIDS ADVENTURE
+   <b>CREATED BY MOH NATHAN ALMUSTAF</b>
+  </footer>
+ `;
+}
+
+function changePlayer(){
+ window.speechSynthesis?.cancel();
+ document.getElementById("homePage").style.display="none";
+ document.getElementById("loginPage").style.display="flex";
+ document.getElementById("playerName").value="";
+ document.getElementById("loginWarning").textContent="";
+}
+
+document.getElementById("loginButton").addEventListener("click",login);
+
+document.getElementById("playerName").addEventListener("keydown",function(e){
+ if(e.key==="Enter") login();
+});
+
 
 </body>
 </html>
