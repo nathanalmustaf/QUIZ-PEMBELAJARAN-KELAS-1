@@ -3,55 +3,53 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Smart Kids Adventure - Azkara</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Kids Adventure</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#101936;color:white}
-button{cursor:pointer;border:0;border-radius:13px;padding:12px;font-weight:bold}
-.app{max-width:1100px;margin:auto;padding:18px}
-header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.logo{font-size:22px;font-weight:900;color:#ffd45c}
-.stats{display:flex;gap:8px;flex-wrap:wrap}
-.stat{background:#26365f;padding:10px;border-radius:12px}
-.hero{background:linear-gradient(120deg,#344e91,#985b9e);padding:25px;border-radius:24px;margin:20px 0;display:flex;justify-content:space-between;align-items:center}
-.hero h1{font-size:32px;margin:8px 0}
-.mascot{font-size:75px}
-nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
-nav button{background:#26365f;color:white}
-nav button.active,.primary{background:#ffd45c;color:#302447}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px}
-.card,.panel{background:#1c2b53;border:1px solid #405481;border-radius:18px;padding:17px}
-.card h3{margin:8px 0}
-.card p,.muted{color:#bdc9e9;line-height:1.5}
-.icon{font-size:42px}
-.primary{margin-top:10px}
-.secondary{background:#344a7c;color:white;margin-top:10px}
-.wide{width:100%}
-.hidden{display:none!important}
+body{margin:0;background:#101832;color:white;font-family:Arial,sans-serif}
+button{border:0;border-radius:13px;padding:12px;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.6}
+.app{max-width:1050px;margin:auto;padding:16px}
+header,.stats,nav,.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+header{justify-content:space-between}
+.logo{font-size:20px;font-weight:900;color:#ffda69}
+.stat{background:#29385f;padding:10px;border-radius:12px}
+.hero{margin:20px 0;padding:25px;border-radius:22px;background:linear-gradient(120deg,#3859a1,#985ba2);display:flex;justify-content:space-between;align-items:center}
+.hero h1{font-size:30px;margin:8px 0}
+.mascot{font-size:65px}
+nav{margin:15px 0}
+nav button{background:#29385f;color:white}
+nav button.active,.primary{background:#ffda69;color:#302447}
 .page{margin-top:20px}
-.lesson{background:#293c6c;padding:15px;border-radius:14px;margin:10px 0;line-height:1.6}
-.question{font-size:21px;font-weight:bold;margin:20px 0}
+.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:13px}
+.card,.panel{background:#1d2b50;border:1px solid #405581;border-radius:18px;padding:17px}
+.card h3{margin:8px 0}
+.card p,.muted{color:#c0cbe4;line-height:1.5}
+.icon{font-size:42px}
+.secondary{background:#3b507c;color:white;margin-top:10px}
+.wide{width:100%;margin-top:12px}
+.lesson{background:#2b3e6c;padding:15px;border-radius:14px;margin:10px 0;line-height:1.6}
+.question{font-size:22px;font-weight:bold;margin:20px 0}
 .answers{display:grid;gap:9px}
-.answer{background:#344a7c;color:white;text-align:left}
-.answer:disabled{opacity:.6}
-.progress{height:9px;background:#101936;border-radius:20px;margin:12px 0;overflow:hidden}
+.answer{background:#3b507c;color:white;text-align:left}
+.progress{height:9px;background:#101832;border-radius:20px;overflow:hidden;margin:12px 0}
 .progress span{display:block;height:100%;background:#65e6c1}
-.panel{margin-top:15px}
-.back{background:none;color:#cbd8ff;padding:5px}
+.back{background:transparent;color:#d5e0ff;padding:5px}
 .mini{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:15px 0}
-.tile{aspect-ratio:1;font-size:30px;background:#344a7c;color:white}
-.tile.done{background:#26766d}
-.puzzle{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;max-width:330px;margin:15px auto}
-.piece{aspect-ratio:1;font-size:30px;background:#344a7c;color:white}
-.blank{background:#101936}
-.report{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #405481}
+.tile{aspect-ratio:1;font-size:29px;background:#3b507c;color:white}
+.puzzle{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;max-width:320px;margin:15px auto}
+.piece{aspect-ratio:1;font-size:28px;background:#3b507c;color:white}
+.blank{background:#101832}
+.report{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #405581}
 footer{text-align:center;color:#9eadd4;padding:25px}
-@media(max-width:500px){.app{padding:12px}.hero h1{font-size:25px}.mascot{font-size:55px}}
+@media(max-width:450px){.hero h1{font-size:24px}.mascot{font-size:48px}.app{padding:12px}}
 </style>
 </head>
 <body>
 <div class="app">
+
 <header>
  <div class="logo">🚀 SMART KIDS ADVENTURE</div>
  <div class="stats">
@@ -61,70 +59,67 @@ footer{text-align:center;color:#9eadd4;padding:25px}
  </div>
 </header>
 
-<section class="hero">
+<div class="hero">
  <div>
   <small>WELCOME LITTLE EXPLORER!</small>
   <h1>Halo, Azkara! 👋</h1>
-  <p>Belajar dan bermain jadi petualangan!</p>
+  <p>Siap memulai petualangan hari ini?</p>
   <b>LEVEL <span id="level">1</span> · <span id="xp">0</span> XP</b>
   <div class="progress"><span id="xpbar"></span></div>
  </div>
  <div class="mascot">🧑‍🚀</div>
-</section>
+</div>
 
 <nav>
- <button class="active" onclick="go('home',this)">🏠 Beranda</button>
- <button onclick="go('learn',this)">📚 Belajar</button>
- <button onclick="go('play',this)">🎮 Play Time</button>
- <button onclick="go('report',this)">📊 Laporan</button>
+ <button class="active" data-page="home">🏠 Beranda</button>
+ <button data-page="learn">📚 Belajar</button>
+ <button data-page="play">🎮 Play Time</button>
+ <button data-page="report">📊 Laporan</button>
 </nav>
 
 <section id="home" class="page">
- <h2>🌟 Dunia Petualangan Azkara</h2>
- <div class="grid" id="homeCards"></div>
- <div class="panel">
+ <h2>🌟 Dunia Petualangan</h2>
+ <div id="homeCards" class="grid"></div>
+ <div class="panel" style="margin-top:15px">
   <h3>🎯 Misi Hari Ini</h3>
-  <p>1. Pelajari satu materi.</p>
-  <p>2. Selesaikan kuis.</p>
-  <p>3. Mainkan satu mini game.</p>
-  <p>4. Kumpulkan bintang dan koin!</p>
+  <p>📚 Pelajari satu materi.</p>
+  <p>📝 Selesaikan kuis.</p>
+  <p>🎮 Mainkan mini game.</p>
+  <p>🏆 Kumpulkan bintang!</p>
  </div>
 </section>
 
 <section id="learn" class="page hidden">
  <h2>📚 Pulau Pengetahuan</h2>
- <p class="muted">Pilih pelajaran untuk membaca materi dan mengerjakan kuis.</p>
- <div class="grid" id="subjects"></div>
- <div id="lessonPanel" class="panel hidden"></div>
+ <div id="subjects" class="grid"></div>
+ <div id="lessonPanel" class="panel hidden" style="margin-top:15px"></div>
 </section>
 
 <section id="play" class="page hidden">
  <h2>🎮 Play Time Zone</h2>
- <p class="muted">Saatnya bermain sambil belajar!</p>
  <div class="grid">
-  <div class="card"><div class="icon">🧩</div><h3>Puzzle Geser</h3><p>Susun angka agar berurutan.</p><button class="primary" onclick="startPuzzle()">Main</button></div>
-  <div class="card"><div class="icon">🃏</div><h3>Memory Match</h3><p>Temukan pasangan gambar.</p><button class="primary" onclick="startMemory()">Main</button></div>
-  <div class="card"><div class="icon">🔢</div><h3>Math Adventure</h3><p>Jawab tantangan berhitung.</p><button class="primary" onclick="startMath()">Main</button></div>
-  <div class="card"><div class="icon">🐼</div><h3>Tebak Gambar</h3><p>Tebak nama hewan dan benda.</p><button class="primary" onclick="startGuess()">Main</button></div>
-  <div class="card"><div class="icon">🎨</div><h3>Coloring Time</h3><p>Buat gambar penuh warna.</p><button class="primary" onclick="startColor()">Main</button></div>
+  <div class="card"><div class="icon">🧩</div><h3>Puzzle Geser</h3><p>Susun angka berurutan.</p><button class="primary" onclick="startPuzzle()">Main</button></div>
+  <div class="card"><div class="icon">🃏</div><h3>Memory Match</h3><p>Cari pasangan gambar.</p><button class="primary" onclick="startMemory()">Main</button></div>
+  <div class="card"><div class="icon">🔢</div><h3>Math Adventure</h3><p>Berhitung sambil bermain.</p><button class="primary" onclick="startMath()">Main</button></div>
+  <div class="card"><div class="icon">🐼</div><h3>Tebak Gambar</h3><p>Tebak nama gambar.</p><button class="primary" onclick="startGuess()">Main</button></div>
+  <div class="card"><div class="icon">🎨</div><h3>Coloring Time</h3><p>Mewarnai kotak gambar.</p><button class="primary" onclick="startColor()">Main</button></div>
  </div>
- <div id="gamePanel" class="panel hidden"></div>
+ <div id="gamePanel" class="panel hidden" style="margin-top:15px"></div>
 </section>
 
 <section id="report" class="page hidden">
  <h2>📊 Laporan Azkara</h2>
  <div class="grid">
-  <div class="card"><small>Total waktu hari ini</small><h2 id="totalTime">00:00</h2></div>
-  <div class="card"><small>Waktu belajar</small><h2 id="studyTime">00:00</h2></div>
-  <div class="card"><small>Waktu bermain</small><h2 id="playTime">00:00</h2></div>
-  <div class="card"><small>Kuis selesai</small><h2 id="quizCount">0</h2></div>
+  <div class="card">Total waktu<h2 id="totalTime">00:00</h2></div>
+  <div class="card">Waktu belajar<h2 id="studyTime">00:00</h2></div>
+  <div class="card">Waktu bermain<h2 id="playTime">00:00</h2></div>
+  <div class="card">Kuis selesai<h2 id="quizCount">0</h2></div>
  </div>
- <div class="panel">
+ <div class="panel" style="margin-top:15px">
   <div class="report">⭐ Bintang <b id="rStars">0</b></div>
   <div class="report">🪙 Koin <b id="rCoins">0</b></div>
   <div class="report">🚀 XP <b id="rXP">0</b></div>
-  <p class="muted">Waktu dihitung saat website terbuka dan tab aktif. Data tersimpan di browser ini.</p>
-  <button class="primary" onclick="downloadReport()">Unduh Laporan</button>
+  <button class="primary wide" onclick="downloadReport()">Unduh Laporan</button>
  </div>
 </section>
 
@@ -132,75 +127,249 @@ footer{text-align:center;color:#9eadd4;padding:25px}
 </div>
 
 <script>
+const $=id=>document.getElementById(id);
 const subjects=[
-{id:'math',name:'Matematika',icon:'🔢',desc:'Angka dan berhitung',lessons:[
-['Mengenal Angka','Angka digunakan untuk menghitung benda. Contohnya 1, 2, 3, 4, dan 5.','🍎🍎🍎 berarti ada 3 apel.'],
-['Penjumlahan','Penjumlahan berarti menggabungkan beberapa benda.','2 + 3 = 5.'],
-['Pengurangan','Pengurangan berarti mengambil sebagian benda.','5 - 2 = 3.'],
-['Bentuk','Lingkaran berbentuk bulat, segitiga memiliki tiga sisi, dan persegi memiliki empat sisi.','Roda berbentuk lingkaran.']],
-q:[
-['2 + 3 = ?',['4','5','6'],1],['7 - 2 = ?',['4','5','6'],1],['Angka setelah 8 adalah ...',['7','9','10'],1],['Bentuk dengan 3 sisi adalah ...',['Lingkaran','Persegi','Segitiga'],2],['4 + 4 = ?',['6','8','9'],1],['Angka paling kecil adalah ...',['3','6','9'],0],['5 + 1 = ?',['5','6','7'],1],['10 - 3 = ?',['6','7','8'],1],['Bentuk roda adalah ...',['Persegi','Lingkaran','Segitiga'],1],['3 apel ditambah 2 apel menjadi ...',['4','5','6'],1],['Angka sebelum 6 adalah ...',['5','7','8'],0],['9 - 4 = ?',['4','5','6'],1],['2 + 2 + 1 = ?',['4','5','6'],1],['Persegi memiliki ... sisi.',['3','4','5'],1],['Angka terbesar adalah ...',['2','8','5'],1],['6 + 3 = ?',['8','9','10'],1],['7 - 5 = ?',['1','2','3'],1],['Angka setelah 14 adalah ...',['13','15','16'],1],['Segitiga memiliki ... sudut.',['2','3','4'],1],['10 + 2 = ?',['11','12','13'],1]
-]},
-{id:'pancasila',name:'Pendidikan Pancasila',icon:'🇮🇩',desc:'Sikap baik dan cinta Indonesia',lessons:[
-['Mengenal Pancasila','Pancasila adalah dasar negara Indonesia. Pancasila memiliki lima sila.','Kita mengamalkan Pancasila dengan berbuat baik.'],
-['Hidup Rukun','Hidup rukun berarti saling menghargai dan tidak bertengkar.','Bermain bersama tanpa membeda-bedakan.'],
-['Aturan','Aturan dibuat agar kegiatan berjalan tertib.','Merapikan mainan setelah bermain.'],
-['Lambang Negara','Lambang negara Indonesia adalah Garuda Pancasila.','Bendera Indonesia merah putih.']],
-q:[
-['Dasar negara Indonesia adalah ...',['Pancasila','Garuda','Bhinneka'],0],['Jumlah sila Pancasila adalah ...',['4','5','6'],1],['Warna bendera Indonesia ...',['Biru putih','Merah putih','Merah kuning'],1],['Lambang negara Indonesia ...',['Harimau','Garuda Pancasila','Komodo'],1],['Jika teman berbeda pendapat kita harus ...',['Menghargai','Mengejek','Marah'],0],['Contoh hidup rukun ...',['Bertengkar','Berbagi mainan','Mengejek'],1],['Aturan membuat hidup menjadi ...',['Kacau','Tertib','Ribut'],1],['Sebelum masuk kelas sebaiknya ...',['Mendorong teman','Berbaris','Berlari'],1],['Meminjam barang teman harus ...',['Mengembalikan','Menyembunyikan','Merusak'],0],['Sila pertama diawali kata ...',['Persatuan','Ketuhanan','Keadilan'],1],['Kita harus menghormati ...',['Teman dekat saja','Semua orang','Tidak siapa-siapa'],1],['Membersihkan kelas bersama disebut ...',['Gotong royong','Bertengkar','Bermain sendiri'],0],['Jika bersalah sebaiknya ...',['Menyalahkan','Meminta maaf','Pergi'],1],['Saat upacara kita harus ...',['Bercanda','Tertib','Berlari'],1],['Semboyan bangsa Indonesia ...',['Tut Wuri','Bhinneka Tunggal Ika','Ing Ngarsa'],1],['Menolong teman adalah perbuatan ...',['Baik','Buruk','Sia-sia'],0],['Di rumah kita membantu ...',['Orang tua','Mengganggu','Merusak'],0],['Bendera Indonesia dikibarkan saat ...',['Upacara','Tidur','Makan'],0],['Sampah sebaiknya dibuang ...',['Sembarangan','Pada tempatnya','Di sungai'],1],['Saat bermain kita menaati ...',['Aturan','Keinginan sendiri','Pertengkaran'],0]
-]},
-{id:'art',name:'Seni Budaya',icon:'🎨',desc:'Warna, gambar, dan musik',lessons:[
-['Mengenal Warna','Warna primer adalah merah, kuning, dan biru.','Merah dan kuning menghasilkan jingga.'],
-['Garis dan Bentuk','Garis bisa lurus, lengkung, atau zig-zag.','Rumah dapat digambar dari bentuk sederhana.'],
-['Irama','Musik memiliki bunyi dan irama.','Kita bisa membuat irama dengan tepuk tangan.'],
-['Berkarya','Saat menggambar gunakan alat dengan hati-hati.','Rapikan alat setelah selesai.']],
-q:[
-['Warna daun biasanya ...',['Hijau','Ungu','Merah muda'],0],['Warna matahari pada gambar ...',['Kuning','Hitam','Biru'],0],['Alat untuk mewarnai ...',['Krayon','Sendok','Sepatu'],0],['Bentuk roda adalah ...',['Segitiga','Lingkaran','Persegi'],1],['Warna primer salah satunya ...',['Merah','Cokelat','Abu-abu'],0],['Merah dicampur kuning menjadi ...',['Hijau','Jingga','Biru'],1],['Tepuk tangan menggunakan ...',['Tangan','Kaki','Mata'],0],['Garis tanpa belokan disebut ...',['Lengkung','Lurus','Zig-zag'],1],['Alat menggambar di kertas ...',['Pensil','Piring','Bantal'],0],['Setelah berkarya kita harus ...',['Merapikan alat','Membuang alat','Mengotori meja'],0],['Warna langit cerah biasanya ...',['Biru','Cokelat','Hitam'],0],['Lagu dinyanyikan menggunakan ...',['Suara','Siku','Rambut'],0],['Empat sisi sama panjang adalah ...',['Persegi','Lingkaran','Segitiga'],0],['Membuat gambar disebut ...',['Menggambar','Berenang','Memasak'],0],['Bunyi teratur dalam musik disebut ...',['Irama','Warna','Bentuk'],0],['Warna bendera Indonesia ...',['Merah putih','Hijau putih','Biru merah'],0],['Alat musik yang dipukul ...',['Drum','Seruling','Biola'],0],['Kertas digunakan untuk ...',['Menggambar','Menyiram','Menyapu'],0],['Biru dicampur kuning menjadi ...',['Hijau','Merah','Putih'],0],['Saat memakai gunting kita harus ...',['Hati-hati','Berlari','Bercanda'],0]
-]},
-{id:'btq',name:'BTQ',icon:'📖',desc:'Huruf hijaiyah dan adab',lessons:[
-['Huruf Hijaiyah','Huruf hijaiyah digunakan untuk membaca bahasa Arab.','ا Alif, ب Ba, ت Ta.'],
-['Harakat','Fathah berbunyi a, kasrah berbunyi i, dan dammah berbunyi u.','بَ dibaca ba.'],
-['Adab Membaca','Membaca Al-Qur’an dilakukan dengan sopan dan tenang.','Duduk dengan baik dan menjaga kebersihan.'],
-['Belajar Tekun','Belajar membaca dilakukan sedikit demi sedikit.','Ulangi bacaan bersama guru atau orang tua.']],
-q:[
-['ا adalah huruf ...',['Alif','Ba','Ta'],0],['ب adalah huruf ...',['Alif','Ba','Ta'],1],['ت adalah huruf ...',['Ta','Jim','Dal'],0],['Fathah berbunyi ...',['a','i','u'],0],['Kasrah berbunyi ...',['a','i','u'],1],['Dammah berbunyi ...',['a','i','u'],2],['بَ dibaca ...',['Ba','Bi','Bu'],0],['بِ dibaca ...',['Ba','Bi','Bu'],1],['بُ dibaca ...',['Ba','Bi','Bu'],2],['Saat membaca Al-Qur’an kita bersikap ...',['Sopan','Bercanda','Berteriak'],0],['Sebelum belajar kita sebaiknya ...',['Berdoa','Bertengkar','Berlari'],0],['Belajar membaca sebaiknya ...',['Tekun','Terburu-buru','Malas'],0],['Al-Qur’an dibaca dengan ...',['Hormat','Main-main','Marah'],0],['Jika belum paham bertanya kepada ...',['Guru','Tidak siapa-siapa','Teman yang tidak tahu'],0],['ج adalah huruf ...',['Jim','Dal','Ra'],0],['ث adalah huruf ...',['Tsa','Ba','Nun'],0],['Saat teman membaca kita ...',['Mendengarkan','Mengganggu','Berteriak'],0],['Belajar dilakukan secara ...',['Teratur','Sekali saja','Tidak pernah'],0],['Tempat belajar yang bersih membuat kita ...',['Nyaman','Takut','Bingung'],0],['تَ dibaca ...',['Ta','Ti','Tu'],0]
-]},
-{id:'pjok',name:'PJOK',icon:'⚽',desc:'Olahraga dan kesehatan',lessons:[
-['Gerak Dasar','Gerak dasar meliputi berjalan, berlari, melompat, dan melempar.','Lakukan gerakan di tempat aman.'],
-['Kebersihan','Tubuh sehat dijaga dengan mandi dan mencuci tangan.','Cuci tangan sebelum makan.'],
-['Makanan Sehat','Tubuh membutuhkan makanan bergizi dan air putih.','Makan buah dan sayur.'],
-['Bermain Aman','Saat berolahraga lakukan pemanasan dan ikuti aturan.','Gunakan tempat bermain yang aman.']],
-q:[
-['Sebelum olahraga kita melakukan ...',['Pemanasan','Tidur','Makan banyak'],0],['Bergerak cepat dengan kaki disebut ...',['Berlari','Duduk','Tidur'],0],['Mencuci tangan sebelum ...',['Makan','Bermain lumpur','Tidur saja'],0],['Minuman baik untuk tubuh ...',['Air putih','Sirup saja','Minuman terlalu manis'],0],['Setelah olahraga sebaiknya ...',['Pendinginan','Langsung berlari','Tidak minum'],0],['Contoh gerak melompat ...',['Melompat ke depan','Membaca','Menggambar'],0],['Agar gigi bersih kita ...',['Menggosok gigi','Membiarkan kotor','Makan permen terus'],0],['Buah dan sayur termasuk makanan ...',['Bergizi','Mainan','Alat tulis'],0],['Saat bermain menjaga ...',['Keselamatan','Pertengkaran','Kekacauan'],0],['Jika haus sebaiknya minum ...',['Air putih','Pasir','Minyak'],0],['Berjalan menggunakan ...',['Kaki','Telinga','Rambut'],0],['Olahraga membuat tubuh ...',['Sehat','Lemah selalu','Tidak bergerak'],0],['Kita mandi agar tubuh ...',['Bersih','Lengket','Berdebu'],0],['Saat bermain bola kita menggunakan ...',['Kaki','Siku saja','Rambut'],0],['Tempat olahraga harus ...',['Aman','Licin','Berbahaya'],0],['Tidur cukup membantu tubuh ...',['Beristirahat','Lapar terus','Tidak bergerak'],0],['Sebelum makan kita harus ...',['Mencuci tangan','Memegang sampah','Bermain tanah'],0],['Gerak melempar menggunakan ...',['Tangan','Mata','Lutut saja'],0],['Saat bersepeda sebaiknya memakai ...',['Helm','Sandal licin','Topi pesta'],0],['Kita perlu makan ...',['Makanan bergizi','Permen saja','Camilan saja'],0]
-]}
+{
+ id:'math',name:'Matematika',icon:'🔢',desc:'Belajar angka dan berhitung',
+ lessons:[
+ ['Mengenal Angka','Angka digunakan untuk menghitung benda. Contohnya 1, 2, 3, 4, dan 5.','🍎🍎🍎 berarti ada 3 apel.'],
+ ['Penjumlahan','Penjumlahan berarti menggabungkan benda.','2 + 3 = 5.'],
+ ['Pengurangan','Pengurangan berarti mengambil sebagian benda.','5 - 2 = 3.'],
+ ['Bentuk','Lingkaran berbentuk bulat, segitiga memiliki tiga sisi.','Roda berbentuk lingkaran.']
+ ],
+ q:[
+ ['2 + 3 = ?','4|5|6',1],['7 - 2 = ?','4|5|6',1],['Angka setelah 8 adalah ...','7|9|10',1],['Bentuk dengan 3 sisi ...','Lingkaran|Persegi|Segitiga',2],['4 + 4 = ?','6|8|9',1],['Angka paling kecil ...','3|6|9',0],['5 + 1 = ?','5|6|7',1],['10 - 3 = ?','6|7|8',1],['Bentuk roda ...','Persegi|Lingkaran|Segitiga',1],['3 apel + 2 apel = ...','4|5|6',1],['Angka sebelum 6 ...','5|7|8',0],['9 - 4 = ?','4|5|6',1],['2 + 2 + 1 = ?','4|5|6',1],['Persegi memiliki ... sisi','3|4|5',1],['Angka terbesar ...','2|8|5',1]
+},
+{
+ id:'pancasila',name:'Pendidikan Pancasila',icon:'🇮🇩',desc:'Belajar sikap baik dan cinta Indonesia',
+ lessons:[
+ ['Mengenal Pancasila','Pancasila adalah dasar negara Indonesia. Pancasila memiliki lima sila.','Kita mengamalkan Pancasila dengan berbuat baik.'],
+ ['Hidup Rukun','Hidup rukun berarti saling menghargai.','Bermain bersama tanpa bertengkar.'],
+ ['Aturan','Aturan dibuat agar kegiatan berjalan tertib.','Merapikan mainan setelah bermain.'],
+ ['Lambang Negara','Lambang negara Indonesia adalah Garuda Pancasila.','Bendera Indonesia merah putih.']
+ ],
+ q:[
+ ['Dasar negara Indonesia ...','Pancasila|Garuda|Bhinneka',0],['Jumlah sila Pancasila ...','4|5|6',1],['Warna bendera Indonesia ...','Biru putih|Merah putih|Merah kuning',1],['Lambang negara ...','Harimau|Garuda Pancasila|Komodo',1],['Menghargai pendapat teman adalah sikap ...','Baik|Buruk|Tidak sopan',0],['Contoh hidup rukun ...','Bertengkar|Berbagi mainan|Mengejek',1],['Aturan membuat hidup ...','Kacau|Tertib|Ribut',1],['Sebelum masuk kelas ...','Mendorong|Berbaris|Berlari',1],['Meminjam barang teman harus ...','Mengembalikan|Menyembunyikan|Merusak',0],['Sila pertama diawali kata ...','Persatuan|Ketuhanan|Keadilan',1],['Kita menghormati ...','Teman dekat saja|Semua orang|Tidak siapa-siapa',1],['Membersihkan kelas bersama ...','Gotong royong|Bertengkar|Bermain sendiri',0],['Jika bersalah kita ...','Menyalahkan|Meminta maaf|Pergi',1],['Saat upacara kita ...','Bercanda|Tertib|Berlari',1],['Semboyan bangsa Indonesia ...','Tut Wuri|Bhinneka Tunggal Ika|Ing Ngarsa',1]
+},
+{
+ id:'art',name:'Seni Budaya',icon:'🎨',desc:'Belajar warna, gambar, dan musik',
+ lessons:[
+ ['Mengenal Warna','Warna primer adalah merah, kuning, dan biru.','Merah dan kuning menghasilkan jingga.'],
+ ['Garis dan Bentuk','Garis bisa lurus, lengkung, atau zig-zag.','Rumah dapat digambar dari bentuk sederhana.'],
+ ['Irama','Musik memiliki bunyi dan irama.','Kita bisa membuat irama dengan tepuk tangan.'],
+ ['Berkarya','Saat menggambar gunakan alat dengan hati-hati.','Rapikan alat setelah selesai.']
+ ],
+ q:[
+ ['Warna daun biasanya ...','Hijau|Ungu|Merah muda',0],['Warna matahari pada gambar ...','Kuning|Hitam|Biru',0],['Alat untuk mewarnai ...','Krayon|Sendok|Sepatu',0],['Bentuk roda ...','Segitiga|Lingkaran|Persegi',1],['Warna primer ...','Merah|Cokelat|Abu-abu',0],['Merah dicampur kuning ...','Hijau|Jingga|Biru',1],['Tepuk tangan menggunakan ...','Tangan|Kaki|Mata',0],['Garis tanpa belokan ...','Lengkung|Lurus|Zig-zag',1],['Alat menggambar ...','Pensil|Piring|Bantal',0],['Setelah berkarya kita ...','Merapikan alat|Membuang alat|Mengotori meja',0],['Warna langit cerah ...','Biru|Cokelat|Hitam',0],['Lagu dinyanyikan menggunakan ...','Suara|Siku|Rambut',0],['Empat sisi sama panjang ...','Persegi|Lingkaran|Segitiga',0],['Membuat gambar disebut ...','Menggambar|Berenang|Memasak',0],['Bunyi teratur dalam musik ...','Irama|Warna|Bentuk',0]
+},
+{
+ id:'btq',name:'BTQ',icon:'📖',desc:'Mengenal huruf hijaiyah',
+ lessons:[
+ ['Huruf Hijaiyah','Huruf hijaiyah digunakan untuk membaca bahasa Arab.','ا Alif, ب Ba, ت Ta.'],
+ ['Harakat','Fathah berbunyi a, kasrah berbunyi i, dammah berbunyi u.','بَ dibaca ba.'],
+ ['Adab Membaca','Membaca Al-Qur’an dilakukan dengan sopan dan tenang.','Duduk dengan baik dan menjaga kebersihan.'],
+ ['Belajar Tekun','Belajar membaca dilakukan sedikit demi sedikit.','Ulangi bacaan bersama guru atau orang tua.']
+ ],
+ q:[
+ ['ا adalah huruf ...','Alif|Ba|Ta',0],['ب adalah huruf ...','Alif|Ba|Ta',1],['ت adalah huruf ...','Ta|Jim|Dal',0],['Fathah berbunyi ...','a|i|u',0],['Kasrah berbunyi ...','a|i|u',1],['Dammah berbunyi ...','a|i|u',2],['بَ dibaca ...','Ba|Bi|Bu',0],['بِ dibaca ...','Ba|Bi|Bu',1],['بُ dibaca ...','Ba|Bi|Bu',2],['Saat membaca kita bersikap ...','Sopan|Bercanda|Berteriak',0],['Sebelum belajar sebaiknya ...','Berdoa|Bertengkar|Berlari',0],['Belajar membaca harus ...','Tekun|Terburu-buru|Malas',0],['Al-Qur’an dibaca dengan ...','Hormat|Main-main|Marah',0],['Jika belum paham bertanya kepada ...','Guru|Tidak siapa-siapa|Tidak bertanya',0],['ج adalah huruf ...','Jim|Dal|Ra',0]
+},
+{
+ id:'pjok',name:'PJOK',icon:'⚽',desc:'Belajar olahraga dan kesehatan',
+ lessons:[
+ ['Gerak Dasar','Gerak dasar meliputi berjalan, berlari, melompat, dan melempar.','Lakukan gerakan di tempat aman.'],
+ ['Kebersihan','Tubuh sehat dijaga dengan mandi dan mencuci tangan.','Cuci tangan sebelum makan.'],
+ ['Makanan Sehat','Tubuh membutuhkan makanan bergizi dan air putih.','Makan buah dan sayur.'],
+ ['Bermain Aman','Saat berolahraga lakukan pemanasan dan ikuti aturan.','Gunakan tempat bermain yang aman.']
+ ],
+ q:[
+ ['Sebelum olahraga ...','Pemanasan|Tidur|Makan banyak',0],['Bergerak cepat dengan kaki ...','Berlari|Duduk|Tidur',0],['Mencuci tangan sebelum ...','Makan|Bermain lumpur|Tidur saja',0],['Minuman baik untuk tubuh ...','Air putih|Sirup saja|Minuman manis',0],['Setelah olahraga ...','Pendinginan|Langsung berlari|Tidak minum',0],['Contoh gerak melompat ...','Melompat ke depan|Membaca|Menggambar',0],['Agar gigi bersih ...','Menggosok gigi|Membiarkan kotor|Makan permen terus',0],['Buah dan sayur termasuk ...','Bergizi|Mainan|Alat tulis',0],['Saat bermain menjaga ...','Keselamatan|Pertengkaran|Kekacauan',0],['Jika haus minum ...','Air putih|Pasir|Minyak',0],['Berjalan menggunakan ...','Kaki|Telinga|Rambut',0],['Olahraga membuat tubuh ...','Sehat|Lemah|Tidak bergerak',0],['Mandi agar tubuh ...','Bersih|Lengket|Berdebu',0],['Saat bermain bola menggunakan ...','Kaki|Rambut|Telinga',0],['Tempat olahraga harus ...','Aman|Licin|Berbahaya',0]
+}
 ];
 
-const key='azkaraAdventure';
-let data=JSON.parse(localStorage.getItem(key)||'null')||{xp:0,coins:0,stars:0,quizzes:0,study:0,play:0,total:0};
-let mode='',chosen=null,quiz=[],qi=0,score=0,opts=[],puzzle=[],first=null,matches=0,mathN=0,mathScore=0,guessN=0,guessScore=0;
-let last=Date.now();
-function save(){localStorage.setItem(key,JSON.stringify(data))}
-function reward(x,c,s=0){data.xp+=x;data.coins+=c;data.stars+=s;save();stats()}
-function stats(){stars.textContent=data.stars;coins.textContent=data.coins;xp.textContent=data.xp;level.textContent=Math.floor(data.xp/100)+1;xpbar.style.width=(data.xp%100)+'%'}
-function timefmt(n){n=Math.floor(n);let h=Math.floor(n/3600),m=Math.floor(n%3600/60),s=n%60;return h?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
-setInterval(()=>{let now=Date.now(),d=Math.min(3,(now-last)/1000);last=now;if(!document.hidden){data.total+=d;if(mode==='study')data.study+=d;if(mode==='play')data.play+=d;save()}timer.textContent=timefmt(data.total);if(!report.classList.contains('hidden'))renderReport()},1000);
-document.addEventListener('visibilitychange',()=>last=Date.now());
-function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function go(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');mode=id==='learn'?'study':id==='play'?'play':'';if(id==='report')renderReport()}
-function card(s){return `<div class="card"><div class="icon">${s.icon}</div><h3>${s.name}</h3><p>${s.desc}</p><button class="primary" onclick="openSubject('${s.id}')">Jelajahi</button></div>`}
-subjectsDiv();
-function subjectsDiv(){
-  document.getElementById('subjects').innerHTML=subjects.map(card).join('');
-  document.getElementById('homeCards').innerHTML=subjects.map(card).join('');
+let data=JSON.parse(localStorage.getItem('azkaraAdventure'))||{
+ xp:0,coins:0,stars:0,quizzes:0,total:0,study:0,play:0
+};
+let currentSubject=null,quiz=[],qi=0,score=0,options=[];
+let timerMode='',lastTick=Date.now();
+let puzzle=[],firstCard=null,matches=0,mathN=0,mathScore=0,guessN=0,guessScore=0;
+
+function save(){localStorage.setItem('azkaraAdventure',JSON.stringify(data))}
+function reward(x,c,s=0){
+ data.xp+=x;data.coins+=c;data.stars+=s;save();updateStats();
 }
-function openSubject(id){chosen=subjects.find(s=>s.id===id);mode='study';lessonPanel.classList.remove('hidden');lessonPanel.innerHTML=`<button class="back" onclick="lessonPanel.classList.add('hidden')">← Kembali</button><h2>${chosen.icon} ${chosen.name}</h2>${chosen.lessons.map((l,i)=>`<div class="lesson"><h3>📘 ${i+1}. ${l[0]}</h3><p>${l[1]}</p><b>Contoh:</b> ${l[2]}</div>`).join('')}<button class="primary wide" onclick="startQuiz('${id}')">Mulai Kuis 15 Soal ⭐</button>`;lessonPanel.scrollIntoView({behavior:'smooth'})}
-function startQuiz(id){chosen=subjects.find(s=>s.id===id);quiz=shuffle(chosen.q).slice(0,15);qi=0;score=0;showQ()}
-function showQ(){let q=quiz[qi];opts=shuffle(q[1].map((v,i)=>({v,ok:i===q[2]})));lessonPanel.innerHTML=`<button class="back" onclick="openSubject('${chosen.id}')">← Kembali</button><h2>⭐ Kuis ${chosen.name}</h2><div class="progress"><span style="width:${qi/15*100}%"></span></div><p>Soal ${qi+1} dari 15</p><div class="question">${q[0]}</div><div class="answers">${opts.map((o,i)=>`<button class="answer" onclick="answerQ(${i})">${'ABC'[i]}. ${o.v}</button>`).join('')}</div><div id="feedback"></div>`}
-function answerQ(i){document.querySelectorAll('.answer').forEach(b=>b.disabled=true);let ok=opts[i].ok;if(ok)score++;feedback.innerHTML=`<div class="lesson">${ok?'🌟 Hebat! Jawaban benar.':'💡 Tidak apa-apa, tetap semangat!' }<br><button class="primary" onclick="nextQ()">${qi===14?'Lihat Hasil':'Lanjut ➜'}</button></div>`}
-function nextQ(){qi++;if(qi<15)showQ();else finishQ()}
-function finishQ(){let st=score>=13?3:score>=9?2:score>=5?1:0;data.quizzes++;reward(score*5,score*2,st);lessonPanel.innerHTML=`<div style="text-align:center"><div class="icon">🏆</div><h2>Kuis Selesai!</h2><h1>${score}/15</h1><p>Kamu mendapat ${st} ⭐ dan ${score*2} 🪙</p><button class="primary" onclick="startQuiz('${chosen.id}')">Ulangi dengan Soal Baru</button><button class="secondary" onclick="openSubject('${chosen.id}')">Kembali ke Materi</button></div>`}
-function game(title,html){gamePanel.classList.remove('hidden');gamePanel.innerHTML=`<button class="back" onclick="gamePanel.classList.add('hidden')">← Kembali ke Play Time</button><h2>${title}</h2>${html}`;gamePanel.scrollIntoView({behavior:'smooth'})}
-function startPuzzle(){mode='play';puzzle=shuffle([1,2,3,4,5,6,7,8,0]);if(puzzle.join()==='1,2,3,4,5,6,7,8,0')puzzle=shuffle(puzzle);drawPuzzle()}
-function drawPuzzle(){game('🧩 Puzzle Geser',`<p>Susun angka 1 sampai 8. Tekan angka di samping kotak kosong.</p><div class="puzzle">${puzzle.map((v,i)=>`<button class="piece ${v===0?'blank':''}" onclick="movePiece(${i})">${v||''}</button>`).join('')}</div><p id="pmsg">Ayo susun sampai urut!</p><button class="secondary" onclick="startPuzzle()">Acak ulang</button>`)}
-function movePiece(i){let z=puzzle.indexOf(0);if((Math.abs(i-z)===1&&Math.floor(i/3)===Math.floor(z/3))||Math.abs(i-z)===3){[puzzle[i],puzzle[z]]=[puzzle[z],puzzle[i]];if(puzzle.every((v,j)=>v===(j===8?0:j+1))){reward(15,8,1);drawPuzzle();pmsg.textContent='🎉 Berhasil! +15 XP, +8 koin.'}else drawPuzzle()}}
-function startMemory(){mode=
+function updateStats(){
+ $('stars').textContent=data.stars;
+ $('coins').textContent=data.coins;
+ $('xp').textContent=data.xp;
+ $('level').textContent=Math.floor(data.xp/100)+1;
+ $('xpbar').style.width=(data.xp%100)+'%';
+}
+function fmt(t){
+ t=Math.floor(t);
+ return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');
+}
+setInterval(()=>{
+ let now=Date.now(),d=Math.min(2,(now-lastTick)/1000);
+ lastTick=now;
+ if(!document.hidden){
+  data.total+=d;
+  if(timerMode==='study')data.study+=d;
+  if(timerMode==='play')data.play+=d;
+  save();
+ }
+ $('timer').textContent=fmt(data.total);
+ if(!$('report').classList.contains('hidden'))renderReport();
+},1000);
+document.addEventListener('visibilitychange',()=>lastTick=Date.now());
+
+function shuffle(arr){
+ let a=[...arr];
+ for(let i=a.length-1;i>0;i--){
+  let j=Math.floor(Math.random()*(i+1));
+  [a[i],a[j]]=[a[j],a[i]];
+ }
+ return a;
+}
+function card(s){
+ return `<div class="card"><div class="icon">${s.icon}</div><h3>${s.name}</h3><p>${s.desc}</p><button class="primary" onclick="openSubject('${s.id}')">Jelajahi</button></div>`;
+}
+function renderCards(){
+ $('homeCards').innerHTML=subjects.map(card).join('');
+ $('subjects').innerHTML=subjects.map(card).join('');
+}
+function navigate(page){
+ document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+ $(page).classList.remove('hidden');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+ timerMode=page==='learn'?'study':page==='play'?'play':'';
+ if(page==='report')renderReport();
+}
+document.querySelectorAll('nav button').forEach(b=>{
+ b.addEventListener('click',()=>navigate(b.dataset.page));
+});
+
+function openSubject(id){
+ currentSubject=subjects.find(s=>s.id===id);
+ timerMode='study';
+ let p=$('lessonPanel');
+ p.classList.remove('hidden');
+ p.innerHTML=`<button class="back" onclick="closeLesson()">← Kembali</button>
+ <h2>${currentSubject.icon} ${currentSubject.name}</h2>
+ ${currentSubject.lessons.map((l,i)=>`<div class="lesson"><h3>📘 ${i+1}. ${l[0]}</h3><p>${l[1]}</p><b>Contoh:</b> ${l[2]}</div>`).join('')}
+ <button class="primary wide" onclick="startQuiz()">Mulai Kuis 15 Soal ⭐</button>`;
+ p.scrollIntoView({behavior:'smooth'});
+}
+function closeLesson(){$('lessonPanel').classList.add('hidden')}
+function startQuiz(){
+ quiz=shuffle(currentSubject.q).slice(0,15);
+ qi=0;score=0;showQuestion();
+}
+function showQuestion(){
+ let q=quiz[qi];
+ options=shuffle(q[1].split('|').map((v,i)=>({v,ok:i===q[2]})));
+ $('lessonPanel').innerHTML=`
+ <button class="back" onclick="openSubject('${currentSubject.id}')">← Kembali</button>
+ <h2>⭐ Kuis ${currentSubject.name}</h2>
+ <div class="progress"><span style="width:${qi/15*100}%"></span></div>
+ <p>Soal ${qi+1} dari 15</p>
+ <div class="question">${q[0]}</div>
+ <div class="answers">${options.map((o,i)=>`<button class="answer" onclick="answerQuestion(${i})">${'ABC'[i]}. ${o.v}</button>`).join('')}</div>
+ <div id="feedback"></div>`;
+}
+function answerQuestion(i){
+ document.querySelectorAll('#lessonPanel .answer').forEach(b=>b.disabled=true);
+ let correct=options[i].ok;
+ if(correct)score++;
+ $('feedback').innerHTML=`<div class="lesson">${correct?'🌟 Hebat! Jawaban benar.':'💡 Belum tepat. Tetap semangat!' }<br><button class="primary" onclick="nextQuestion()">${qi===14?'Lihat Hasil':'Lanjut ➜'}</button></div>`;
+}
+function nextQuestion(){
+ qi++;
+ if(qi<15)showQuestion();
+ else finishQuiz();
+}
+function finishQuiz(){
+ let stars=score>=13?3:score>=9?2:score>=5?1:0;
+ data.quizzes++;
+ reward(score*5,score*2,stars);
+ $('lessonPanel').innerHTML=`<div style="text-align:center"><div class="icon">🏆</div><h2>Kuis Selesai!</h2><h1>${score}/15</h1><p>Kamu mendapat ${stars} ⭐ dan ${score*2} 🪙</p><button class="primary" onclick="startQuiz()">Ulangi dengan Soal Baru</button><button class="secondary" onclick="openSubject('${currentSubject.id}')">Kembali ke Materi</button></div>`;
+}
+
+function game(title,html){
+ timerMode='play';
+ let p=$('gamePanel');
+ p.classList.remove('hidden');
+ p.innerHTML=`<button class="back" onclick="closeGame()">← Kembali ke Play Time</button><h2>${title}</h2>${html}`;
+ p.scrollIntoView({behavior:'smooth'});
+}
+function closeGame(){$('gamePanel').classList.add('hidden')}
+function startPuzzle(){
+ puzzle=[1,2,3,4,5,6,7,8,0];
+ for(let n=0;n<80;n++){
+  let z=puzzle.indexOf(0),moves=[z-3,z+3];
+  if(z%3>0)moves.push(z-1);
+  if(z%3<2)moves.push(z+1);
+  let valid=moves.filter(i=>i>=0&&i<9);
+  let j=valid[Math.floor(Math.random()*valid.length)];
+  [puzzle[z],puzzle[j]]=[puzzle[j],puzzle[z]];
+ }
+ drawPuzzle();
+}
+function drawPuzzle(){
+ game('🧩 Puzzle Geser',`<p>Susun angka dari 1 sampai 8.</p><div class="puzzle">${puzzle.map((v,i)=>`<button class="piece ${v===0?'blank':''}" onclick="movePiece(${i})">${v||''}</button>`).join('')}</div><p id="pmsg">Ayo susun sampai urut!</p><button class="secondary" onclick="startPuzzle()">Acak ulang</button>`);
+}
+function movePiece(i){
+ let z=puzzle.indexOf(0);
+ if((Math.abs(i-z)===1&&Math.floor(i/3)===Math.floor(z/3))||Math.abs(i-z)===3){
+  [puzzle[i],puzzle[z]]=[puzzle[z],puzzle[i]];
+  if(puzzle.every((v,j)=>v===(j===8?0:j+1))){
+   reward(15,8,1);
+   drawPuzzle();
+   $('pmsg').textContent='🎉 Berhasil! +15 XP dan +8 koin!';
+  }else drawPuzzle();
+ }
+}
+function startMemory(){
+ let deck=shuffle(['🐶','🐱','🐰','🦊','🐼','🐸','🦁','🐵'].flatMap(x=>[x,x]));
+ firstCard=null;matches=0;
+ game('🃏 Memory Match',`<p>Temukan 8 pasangan gambar.</p><div class="mini">${deck.map(v=>`<button class="tile" data-v="${v}" onclick="flipCard(this)">❔</button>`).join('')}</div><p id="memmsg">Pasangan: 0/8</p>`);
+}
+function flipCard(el){
+ if(el.disabled||el===firstCard)return;
+ el.textContent=el.dataset.v;
+ if(!firstCard){firstCard=el;return}
+ let a=firstCard,b=el;
+ if(a.dataset.v===b.dataset.v){
+  a.disabled=true;b.disabled=true;
+  a.classList.add('done');b.classList.add('done');
+  matches++;firstCard=null;
+  $('memmsg').textContent=`Pasangan: ${matches}/8`;
+  if(matches===8){reward(20,10,1);$('memmsg').textContent='🎉 Semua pasangan ditemukan! +20 XP';}
+ }else{
+  firstCard=null;
+  setTimeout(()=>{a.textContent='❔';b.textContent='❔'},700);
+ }
+}
+function startMath(){mathN=0;mathScore=0;mathQuestion()}
+function mathQuestion(){
+ if(mathN>=10){
+  reward(mathScore*3,mathScore*2,mathScore>=8?1:0);
+  game('🔢 Math Adventure',`<h2>Selesai!</h2><p>Jawaban benar: ${mathScore}/10</p><button class="primary" onclick="startMath()">Main lagi</button>`);
+  return;
+ }
+ let a=Math.ceil(Math.random()*9),b=Math.ceil(Math.random()*9);
+ let sub=Math.random()>.5;
+ if(sub&&b>a)[a,b]=[b,a];
+ let ans=sub?a-b:a+b;
+ let choices=shuffle([...new Set([ans,ans+1,Math.max(0,ans-1),ans+2])]).slice(0,3);
+ if(!choices.includes(ans))choices[0]=ans;
+ choices=shuffle(choices);
+ game('🔢 Math Adventure',`<p>Soal ${mathN+1}/10</p><div class="question">${a} ${sub?'−':'+'} ${b} = ?</div><div class="answers">${choices.map(v=>`<button class="answer" onclick="mathAnswer(${v},${ans})">${v}</button>`).join('')}</div><p id="mathmsg"></p>`);
+}
+function mathAnswer(v,ans){
+ if(v===ans){mathScore++;$('mathmsg').textContent='🌟 Benar!'}
+ else $('mathmsg').textContent=`Jawabannya ${ans}. Tetap semangat!`;
+ document.querySelectorAll('#gamePanel .answer').forEach(b=>b.disabled=true);
+ mathN++;
+ setTimeout(mathQuestion,900);
+}
+const pictures=[['🐘','Gajah'],['🦋','Kupu-kupu'],['🍎',
