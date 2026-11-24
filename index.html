@@ -9,6 +9,88 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@500;700;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+.navbar{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:8px;
+ margin-top:18px;
+ padding:8px;
+ background:#211d27;
+ border:1px solid #563244;
+ border-radius:14px;
+}
+.nav-btn{
+ padding:12px 5px;
+ color:#b9aeb9;
+ background:transparent;
+ border:0;
+ border-radius:9px;
+ font-size:10px;
+ font-weight:700;
+}
+.nav-btn.active{
+ color:white;
+ background:#a91d46;
+}
+.panel{
+ padding:17px;
+ margin-top:13px;
+ background:#211d27;
+ border:1px solid #563244;
+ border-radius:15px;
+}
+.panel h3{
+ font:17px Anton;
+ letter-spacing:1px;
+ margin-bottom:10px;
+}
+.panel p{
+ color:#c7b9c3;
+ font-size:11px;
+ line-height:1.8;
+}
+.mission-row{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ padding:13px 0;
+ border-bottom:1px solid #49303d;
+}
+.mission-icon{
+ font-size:25px;
+}
+.mission-row div:nth-child(2){flex:1}
+.mission-row b{font-size:12px}
+.mission-row small{
+ display:block;
+ color:#b9aeb9;
+ font-size:10px;
+ margin-top:4px;
+}
+.green-text{color:#00dfa0!important}
+.profile-big{
+ text-align:center;
+ padding:25px 10px;
+}
+.profile-big .avatar{
+ display:inline-block;
+ font-size:45px;
+ margin-bottom:12px;
+}
+.profile-big h2{
+ font:28px Anton;
+}
+.profile-big p{
+ color:#b9aeb9;
+ font-size:11px;
+ margin-top:7px;
+}
+.mission-reward{
+ color:#00dfa0!important;
+ font:10px Orbitron;
+ margin-top:10px;
+}
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
@@ -164,12 +246,122 @@ function greeting(){
  return "Selamat datang di arena belajar. Siap menyelesaikan misi?";
 }
 
+
 function showDashboard(){
  document.getElementById("loginPage").classList.add("hidden");
  document.getElementById("homePage").classList.remove("hidden");
+ renderTab("home");
+}
 
+function renderTab(tab){
  const level=Math.floor(data.xp/100)+1;
  const progress=data.xp%100;
+ const done=data.lessonDone.length;
+
+ let content="";
+
+ if(tab==="home"){
+  content=`
+   <div class="hero">
+    <small>WELCOME TO THE ARENA</small>
+    <h1>HALO, ${safe(player.toUpperCase())}!</h1>
+    <p>${safe(greeting())}</p>
+   </div>
+
+   <div class="stats">
+    <div class="stat"><strong>${data.xp}</strong><span>XP</span></div>
+    <div class="stat"><strong>${data.coins}</strong><span>KOIN</span></div>
+    <div class="stat"><strong>${level}</strong><span>LEVEL</span></div>
+   </div>
+
+   <div class="progress-card">
+    <div class="progress-head">
+     <span>LEVEL PROGRESS</span>
+     <b>${progress}/100 XP</b>
+    </div>
+    <div class="track">
+     <div class="fill" style="width:${progress}%"></div>
+    </div>
+   </div>
+
+   <h2 class="section-title">○ COMMAND CENTER</h2>
+
+   <div class="panel">
+    <h3>🎯 DAILY MISSION</h3>
+    <p>Selesaikan satu materi pembelajaran hari ini.</p>
+    <div class="mission-reward">HADIAH: 10 XP + 5 KOIN</div>
+   </div>
+
+   <div class="panel">
+    <h3>📚 LEARNING PROGRESS</h3>
+    <p>${done} materi telah diselesaikan.</p>
+    <div class="track">
+     <div class="fill" style="width:${Math.min(done/15*100,100)}%"></div>
+    </div>
+   </div>
+
+   <div class="panel">
+    <h3>🚀 UPCOMING MISSIONS</h3>
+    <div class="mission-row">
+     <div class="mission-icon">📖</div>
+     <div><b>Learning Arena</b><small>Belajar lima mata pelajaran</small></div>
+    </div>
+    <div class="mission-row">
+     <div class="mission-icon">🎯</div>
+     <div><b>Quiz Challenge</b><small>Tantangan 15 soal</small></div>
+    </div>
+    <div class="mission-row">
+     <div class="mission-icon">🧩</div>
+     <div><b>Mini Games</b><small>Permainan edukasi</small></div>
+    </div>
+   </div>`;
+ }
+
+ if(tab==="mission"){
+  content=`
+   <h2 class="section-title">△ MISSION BOARD</h2>
+   <div class="panel">
+    <h3>MISSION 01 · BELAJAR</h3>
+    <p>Pelajari materi dari lima mata pelajaran kelas 3 SD.</p>
+    <div class="mission-reward">TARGET: 15 MATERI</div>
+   </div>
+   <div class="panel">
+    <h3>MISSION 02 · QUIZ</h3>
+    <p>Jawab 15 soal untuk menguji pengetahuanmu.</p>
+    <div class="mission-reward">SEGERA HADIR</div>
+   </div>
+   <div class="panel">
+    <h3>MISSION 03 · MINI GAMES</h3>
+    <p>Asah kemampuan melalui permainan seru.</p>
+    <div class="mission-reward">SEGERA HADIR</div>
+   </div>
+   <div class="panel">
+    <h3>🏆 ACHIEVEMENT</h3>
+    <p>Materi selesai: ${done}/15</p>
+    <p>Total XP: ${data.xp}</p>
+   </div>`;
+ }
+
+ if(tab==="profile"){
+  content=`
+   <div class="panel profile-big">
+    <div class="avatar">🎭</div>
+    <h2>${safe(player.toUpperCase())}</h2>
+    <p>SMART KIDS ADVENTURE PLAYER</p>
+   </div>
+   <div class="stats">
+    <div class="stat"><strong>${data.xp}</strong><span>XP</span></div>
+    <div class="stat"><strong>${data.coins}</strong><span>KOIN</span></div>
+    <div class="stat"><strong>${level}</strong><span>LEVEL</span></div>
+   </div>
+   <div class="panel">
+    <h3>PLAYER RECORD</h3>
+    <p>Materi selesai: ${done}/15</p>
+    <p>Level saat ini: ${level}</p>
+    <p>Status: <span class="green-text">ACTIVE</span></p>
+   </div>
+   <button class="main-btn" onclick="changePlayer()">GANTI PEMAIN</button>`;
+ }
 
  document.getElementById("dashboard").innerHTML=`
   <div class="topbar">
@@ -183,47 +375,16 @@ function showDashboard(){
     <small>PLAYER PROFILE</small>
     <b>${safe(player.toUpperCase())}</b>
    </div>
-   <button class="small-btn" onclick="changePlayer()">GANTI</button>
+   <span class="green-text">●</span>
   </div>
 
-  <div class="hero">
-   <small>WELCOME TO THE ARENA</small>
-   <h1>HALO, ${safe(player.toUpperCase())}!</h1>
-   <p>${safe(greeting())}</p>
+  <div class="navbar">
+   <button class="nav-btn ${tab==="home"?"active":""}" onclick="renderTab('home')">⌂ BERANDA</button>
+   <button class="nav-btn ${tab==="mission"?"active":""}" onclick="renderTab('mission')">△ MISI</button>
+   <button class="nav-btn ${tab==="profile"?"active":""}" onclick="renderTab('profile')">□ PROFIL</button>
   </div>
 
-  <div class="stats">
-   <div class="stat"><strong>${data.xp}</strong><span>XP</span></div>
-   <div class="stat"><strong>${data.coins}</strong><span>KOIN</span></div>
-   <div class="stat"><strong>${level}</strong><span>LEVEL</span></div>
-  </div>
-
-  <div class="progress-card">
-   <div class="progress-head">
-    <span>LEVEL PROGRESS</span>
-    <b>${progress}/100 XP</b>
-   </div>
-   <div class="track">
-    <div class="fill" style="width:${progress}%"></div>
-   </div>
-  </div>
-
-  <h2 class="section-title">○ MISSION CONTROL</h2>
-
-  <div class="mission">
-   <b>01 · LEARNING ARENA</b>
-   <p>Tempat belajar lima mata pelajaran kelas 3 SD.</p>
-  </div>
-
-  <div class="mission">
-   <b>02 · QUIZ CHALLENGE</b>
-   <p>Uji kemampuanmu melalui tantangan soal.</p>
-  </div>
-
-  <div class="mission">
-   <b>03 · MINI GAMES</b>
-   <p>Permainan seru untuk melatih kemampuan berpikir.</p>
-  </div>
+  ${content}
 
   <footer>
    SMART KIDS ADVENTURE
