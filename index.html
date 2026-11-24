@@ -165,11 +165,35 @@ document.getElementById("lesson").innerHTML=`
 <button onclick="openSubject('${current}')">Belajar lagi</button>`;
 }
 
-function askAI(){
-let q=document.getElementById("question").value.trim();
-if(!q){document.getElementById("answer").textContent="Tulis pertanyaan dulu ya!";return;}
-document.getElementById("answer").textContent=
-"Fitur Guru AI belum terhubung. Nanti kita sambungkan melalui server AI agar bisa menjawab pertanyaan Azkara.";
+async function askAI(){
+  const q = document.getElementById("question").value.trim();
+  const answer = document.getElementById("answer");
+
+  if(!q){
+    answer.textContent = "Tulis pertanyaan dulu ya!";
+    return;
+  }
+
+  answer.textContent = "Guru AI sedang berpikir...";
+
+  try {
+    const response = await fetch(
+      "https://guru-ai-azkara.donisamdalandalan.workers.dev/",
+      {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({question:q})
+      }
+    );
+
+    const result = await response.json();
+
+    if(!response.ok) throw new Error(result.error || "Terjadi kesalahan");
+
+    answer.textContent = result.answer;
+  } catch(error) {
+    answer.textContent = "Maaf, Guru AI belum bisa menjawab. Coba lagi ya!";
+  }
 }
 
 showSubjects();update();
