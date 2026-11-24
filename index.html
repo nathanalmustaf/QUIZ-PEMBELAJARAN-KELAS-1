@@ -3,373 +3,343 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Smart Kids Adventure</title>
 <style>
+:root{--purple:#7655df;--pink:#ff83b5;--blue:#5ca9f5;--yellow:#ffca55;--green:#50c99a;--bg:#f5f3ff}
 *{box-sizing:border-box}
-body{margin:0;background:#101832;color:white;font-family:Arial,sans-serif}
-button{border:0;border-radius:13px;padding:12px;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.6}
-.app{max-width:1050px;margin:auto;padding:16px}
-header,.stats,nav,.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-header{justify-content:space-between}
-.logo{font-size:20px;font-weight:900;color:#ffda69}
-.stat{background:#29385f;padding:10px;border-radius:12px}
-.hero{margin:20px 0;padding:25px;border-radius:22px;background:linear-gradient(120deg,#3859a1,#985ba2);display:flex;justify-content:space-between;align-items:center}
-.hero h1{font-size:30px;margin:8px 0}
-.mascot{font-size:65px}
-nav{margin:15px 0}
-nav button{background:#29385f;color:white}
-nav button.active,.primary{background:#ffda69;color:#302447}
-.page{margin-top:20px}
-.hidden{display:none!important}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:13px}
-.card,.panel{background:#1d2b50;border:1px solid #405581;border-radius:18px;padding:17px}
-.card h3{margin:8px 0}
-.card p,.muted{color:#c0cbe4;line-height:1.5}
-.icon{font-size:42px}
-.secondary{background:#3b507c;color:white;margin-top:10px}
-.wide{width:100%;margin-top:12px}
-.lesson{background:#2b3e6c;padding:15px;border-radius:14px;margin:10px 0;line-height:1.6}
-.question{font-size:22px;font-weight:bold;margin:20px 0}
-.answers{display:grid;gap:9px}
-.answer{background:#3b507c;color:white;text-align:left}
-.progress{height:9px;background:#101832;border-radius:20px;overflow:hidden;margin:12px 0}
-.progress span{display:block;height:100%;background:#65e6c1}
-.back{background:transparent;color:#d5e0ff;padding:5px}
-.mini{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:15px 0}
-.tile{aspect-ratio:1;font-size:29px;background:#3b507c;color:white}
-.puzzle{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;max-width:320px;margin:15px auto}
-.piece{aspect-ratio:1;font-size:28px;background:#3b507c;color:white}
-.blank{background:#101832}
-.report{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #405581}
-footer{text-align:center;color:#9eadd4;padding:25px}
-@media(max-width:450px){.hero h1{font-size:24px}.mascot{font-size:48px}.app{padding:12px}}
+body{margin:0;background:var(--bg);font-family:'Trebuchet MS',Arial,sans-serif;color:#302b4b}
+button{border:0;cursor:pointer;font:inherit}
+header{background:linear-gradient(120deg,#7655df,#aa78ed);color:white;padding:22px 5%;border-radius:0 0 28px 28px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{font-size:21px;font-weight:900}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:#ffffff25;padding:9px 13px;border-radius:14px;font-weight:bold}
+main{max-width:1100px;margin:auto;padding:22px 16px 60px}
+h1{font-size:27px;margin:12px 0 5px}
+h2{font-size:21px}
+p{line-height:1.6}
+.hero{background:linear-gradient(120deg,#ffe4f0,#e9e2ff);padding:25px;border-radius:24px;display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}
+.hero h1{color:#6847ca}
+.hero .mascot{font-size:75px}
+.section-title{margin:25px 0 13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px}
+.card{background:white;border-radius:19px;padding:18px;box-shadow:0 5px 18px #4d397d10}
+.subject{cursor:pointer;transition:.2s;border-bottom:5px solid var(--color)}
+.subject:hover,.game:hover{transform:translateY(-3px)}
+.emoji{font-size:38px}
+.subject h3{margin:10px 0 5px}
+.small{font-size:13px;color:#777}
+.btn{background:var(--purple);color:white;padding:12px 18px;border-radius:13px;font-weight:bold;margin:4px}
+.btn.secondary{background:#eee9ff;color:#6847ca}
+.btn.green{background:var(--green)}
+.btn.orange{background:#f6a83d}
+.btn.red{background:#ed7185}
+button:disabled{opacity:.5;cursor:not-allowed}
+.panel{background:white;border-radius:22px;padding:22px;margin:15px 0;box-shadow:0 5px 18px #4d397d10}
+.back{background:#eee9ff;color:#6847ca;padding:10px 15px;border-radius:12px;font-weight:bold}
+.option{display:block;width:100%;text-align:left;background:#f3f0ff;padding:15px;border-radius:13px;margin:9px 0;color:#302b4b}
+.option:hover{background:#e5dcff}
+.option.correct{background:#d7f8e9}
+.option.wrong{background:#ffe0e5}
+.progress{height:12px;background:#eee;border-radius:20px;overflow:hidden}
+.progress div{height:100%;background:var(--green);width:0%;transition:.3s}
+.center{text-align:center}
+.big{font-size:55px}
+footer{text-align:center;color:#888;padding:20px;font-size:12px}
+input{padding:12px;border:2px solid #e6e0f5;border-radius:12px;font:inherit;width:100%;margin:6px 0}
+.memory{font-size:35px;background:#eee9ff;border-radius:14px;min-height:75px}
+.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+canvas{max-width:100%;border:2px solid #ddd;border-radius:12px;touch-action:none}
+@media(max-width:500px){.hero{padding:17px}.hero .mascot{font-size:53px}.hero h1{font-size:22px}.memory-grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
-<div class="app">
-
 <header>
- <div class="logo">🚀 SMART KIDS ADVENTURE</div>
- <div class="stats">
-  <div class="stat">⭐ <span id="stars">0</span></div>
-  <div class="stat">🪙 <span id="coins">0</span></div>
-  <div class="stat">⏱️ <span id="timer">00:00</span></div>
+ <div class="top">
+  <div class="logo">🚀 SMART KIDS ADVENTURE</div>
+  <div class="stats">
+   <div class="stat">⭐ <span id="stars">0</span></div>
+   <div class="stat">🪙 <span id="coins">0</span></div>
+   <div class="stat">⚡ Lv. <span id="level">1</span></div>
+  </div>
  </div>
 </header>
-
-<div class="hero">
- <div>
-  <small>WELCOME LITTLE EXPLORER!</small>
-  <h1>Halo, Azkara! 👋</h1>
-  <p>Siap memulai petualangan hari ini?</p>
-  <b>LEVEL <span id="level">1</span> · <span id="xp">0</span> XP</b>
-  <div class="progress"><span id="xpbar"></span></div>
- </div>
- <div class="mascot">🧑‍🚀</div>
-</div>
-
-<nav>
- <button class="active" data-page="home">🏠 Beranda</button>
- <button data-page="learn">📚 Belajar</button>
- <button data-page="play">🎮 Play Time</button>
- <button data-page="report">📊 Laporan</button>
-</nav>
-
-<section id="home" class="page">
- <h2>🌟 Dunia Petualangan</h2>
- <div id="homeCards" class="grid"></div>
- <div class="panel" style="margin-top:15px">
-  <h3>🎯 Misi Hari Ini</h3>
-  <p>📚 Pelajari satu materi.</p>
-  <p>📝 Selesaikan kuis.</p>
-  <p>🎮 Mainkan mini game.</p>
-  <p>🏆 Kumpulkan bintang!</p>
- </div>
-</section>
-
-<section id="learn" class="page hidden">
- <h2>📚 Pulau Pengetahuan</h2>
- <div id="subjects" class="grid"></div>
- <div id="lessonPanel" class="panel hidden" style="margin-top:15px"></div>
-</section>
-
-<section id="play" class="page hidden">
- <h2>🎮 Play Time Zone</h2>
- <div class="grid">
-  <div class="card"><div class="icon">🧩</div><h3>Puzzle Geser</h3><p>Susun angka berurutan.</p><button class="primary" onclick="startPuzzle()">Main</button></div>
-  <div class="card"><div class="icon">🃏</div><h3>Memory Match</h3><p>Cari pasangan gambar.</p><button class="primary" onclick="startMemory()">Main</button></div>
-  <div class="card"><div class="icon">🔢</div><h3>Math Adventure</h3><p>Berhitung sambil bermain.</p><button class="primary" onclick="startMath()">Main</button></div>
-  <div class="card"><div class="icon">🐼</div><h3>Tebak Gambar</h3><p>Tebak nama gambar.</p><button class="primary" onclick="startGuess()">Main</button></div>
-  <div class="card"><div class="icon">🎨</div><h3>Coloring Time</h3><p>Mewarnai kotak gambar.</p><button class="primary" onclick="startColor()">Main</button></div>
- </div>
- <div id="gamePanel" class="panel hidden" style="margin-top:15px"></div>
-</section>
-
-<section id="report" class="page hidden">
- <h2>📊 Laporan Azkara</h2>
- <div class="grid">
-  <div class="card">Total waktu<h2 id="totalTime">00:00</h2></div>
-  <div class="card">Waktu belajar<h2 id="studyTime">00:00</h2></div>
-  <div class="card">Waktu bermain<h2 id="playTime">00:00</h2></div>
-  <div class="card">Kuis selesai<h2 id="quizCount">0</h2></div>
- </div>
- <div class="panel" style="margin-top:15px">
-  <div class="report">⭐ Bintang <b id="rStars">0</b></div>
-  <div class="report">🪙 Koin <b id="rCoins">0</b></div>
-  <div class="report">🚀 XP <b id="rXP">0</b></div>
-  <button class="primary wide" onclick="downloadReport()">Unduh Laporan</button>
- </div>
-</section>
-
-<footer>✨ Smart Kids Adventure · Belajar jadi petualangan! ✨</footer>
-</div>
+<main id="app"></main>
+<footer>🌈 SMART KIDS ADVENTURE · Belajar sambil bermain!</footer>
 
 <script>
-const $=id=>document.getElementById(id);
 const subjects=[
-{
- id:'math',name:'Matematika',icon:'🔢',desc:'Belajar angka dan berhitung',
- lessons:[
- ['Mengenal Angka','Angka digunakan untuk menghitung benda. Contohnya 1, 2, 3, 4, dan 5.','🍎🍎🍎 berarti ada 3 apel.'],
- ['Penjumlahan','Penjumlahan berarti menggabungkan benda.','2 + 3 = 5.'],
- ['Pengurangan','Pengurangan berarti mengambil sebagian benda.','5 - 2 = 3.'],
- ['Bentuk','Lingkaran berbentuk bulat, segitiga memiliki tiga sisi.','Roda berbentuk lingkaran.']
- ],
- q:[
- ['2 + 3 = ?','4|5|6',1],['7 - 2 = ?','4|5|6',1],['Angka setelah 8 adalah ...','7|9|10',1],['Bentuk dengan 3 sisi ...','Lingkaran|Persegi|Segitiga',2],['4 + 4 = ?','6|8|9',1],['Angka paling kecil ...','3|6|9',0],['5 + 1 = ?','5|6|7',1],['10 - 3 = ?','6|7|8',1],['Bentuk roda ...','Persegi|Lingkaran|Segitiga',1],['3 apel + 2 apel = ...','4|5|6',1],['Angka sebelum 6 ...','5|7|8',0],['9 - 4 = ?','4|5|6',1],['2 + 2 + 1 = ?','4|5|6',1],['Persegi memiliki ... sisi','3|4|5',1],['Angka terbesar ...','2|8|5',1]
-},
-{
- id:'pancasila',name:'Pendidikan Pancasila',icon:'🇮🇩',desc:'Belajar sikap baik dan cinta Indonesia',
- lessons:[
- ['Mengenal Pancasila','Pancasila adalah dasar negara Indonesia. Pancasila memiliki lima sila.','Kita mengamalkan Pancasila dengan berbuat baik.'],
- ['Hidup Rukun','Hidup rukun berarti saling menghargai.','Bermain bersama tanpa bertengkar.'],
- ['Aturan','Aturan dibuat agar kegiatan berjalan tertib.','Merapikan mainan setelah bermain.'],
- ['Lambang Negara','Lambang negara Indonesia adalah Garuda Pancasila.','Bendera Indonesia merah putih.']
- ],
- q:[
- ['Dasar negara Indonesia ...','Pancasila|Garuda|Bhinneka',0],['Jumlah sila Pancasila ...','4|5|6',1],['Warna bendera Indonesia ...','Biru putih|Merah putih|Merah kuning',1],['Lambang negara ...','Harimau|Garuda Pancasila|Komodo',1],['Menghargai pendapat teman adalah sikap ...','Baik|Buruk|Tidak sopan',0],['Contoh hidup rukun ...','Bertengkar|Berbagi mainan|Mengejek',1],['Aturan membuat hidup ...','Kacau|Tertib|Ribut',1],['Sebelum masuk kelas ...','Mendorong|Berbaris|Berlari',1],['Meminjam barang teman harus ...','Mengembalikan|Menyembunyikan|Merusak',0],['Sila pertama diawali kata ...','Persatuan|Ketuhanan|Keadilan',1],['Kita menghormati ...','Teman dekat saja|Semua orang|Tidak siapa-siapa',1],['Membersihkan kelas bersama ...','Gotong royong|Bertengkar|Bermain sendiri',0],['Jika bersalah kita ...','Menyalahkan|Meminta maaf|Pergi',1],['Saat upacara kita ...','Bercanda|Tertib|Berlari',1],['Semboyan bangsa Indonesia ...','Tut Wuri|Bhinneka Tunggal Ika|Ing Ngarsa',1]
-},
-{
- id:'art',name:'Seni Budaya',icon:'🎨',desc:'Belajar warna, gambar, dan musik',
- lessons:[
- ['Mengenal Warna','Warna primer adalah merah, kuning, dan biru.','Merah dan kuning menghasilkan jingga.'],
- ['Garis dan Bentuk','Garis bisa lurus, lengkung, atau zig-zag.','Rumah dapat digambar dari bentuk sederhana.'],
- ['Irama','Musik memiliki bunyi dan irama.','Kita bisa membuat irama dengan tepuk tangan.'],
- ['Berkarya','Saat menggambar gunakan alat dengan hati-hati.','Rapikan alat setelah selesai.']
- ],
- q:[
- ['Warna daun biasanya ...','Hijau|Ungu|Merah muda',0],['Warna matahari pada gambar ...','Kuning|Hitam|Biru',0],['Alat untuk mewarnai ...','Krayon|Sendok|Sepatu',0],['Bentuk roda ...','Segitiga|Lingkaran|Persegi',1],['Warna primer ...','Merah|Cokelat|Abu-abu',0],['Merah dicampur kuning ...','Hijau|Jingga|Biru',1],['Tepuk tangan menggunakan ...','Tangan|Kaki|Mata',0],['Garis tanpa belokan ...','Lengkung|Lurus|Zig-zag',1],['Alat menggambar ...','Pensil|Piring|Bantal',0],['Setelah berkarya kita ...','Merapikan alat|Membuang alat|Mengotori meja',0],['Warna langit cerah ...','Biru|Cokelat|Hitam',0],['Lagu dinyanyikan menggunakan ...','Suara|Siku|Rambut',0],['Empat sisi sama panjang ...','Persegi|Lingkaran|Segitiga',0],['Membuat gambar disebut ...','Menggambar|Berenang|Memasak',0],['Bunyi teratur dalam musik ...','Irama|Warna|Bentuk',0]
-},
-{
- id:'btq',name:'BTQ',icon:'📖',desc:'Mengenal huruf hijaiyah',
- lessons:[
- ['Huruf Hijaiyah','Huruf hijaiyah digunakan untuk membaca bahasa Arab.','ا Alif, ب Ba, ت Ta.'],
- ['Harakat','Fathah berbunyi a, kasrah berbunyi i, dammah berbunyi u.','بَ dibaca ba.'],
- ['Adab Membaca','Membaca Al-Qur’an dilakukan dengan sopan dan tenang.','Duduk dengan baik dan menjaga kebersihan.'],
- ['Belajar Tekun','Belajar membaca dilakukan sedikit demi sedikit.','Ulangi bacaan bersama guru atau orang tua.']
- ],
- q:[
- ['ا adalah huruf ...','Alif|Ba|Ta',0],['ب adalah huruf ...','Alif|Ba|Ta',1],['ت adalah huruf ...','Ta|Jim|Dal',0],['Fathah berbunyi ...','a|i|u',0],['Kasrah berbunyi ...','a|i|u',1],['Dammah berbunyi ...','a|i|u',2],['بَ dibaca ...','Ba|Bi|Bu',0],['بِ dibaca ...','Ba|Bi|Bu',1],['بُ dibaca ...','Ba|Bi|Bu',2],['Saat membaca kita bersikap ...','Sopan|Bercanda|Berteriak',0],['Sebelum belajar sebaiknya ...','Berdoa|Bertengkar|Berlari',0],['Belajar membaca harus ...','Tekun|Terburu-buru|Malas',0],['Al-Qur’an dibaca dengan ...','Hormat|Main-main|Marah',0],['Jika belum paham bertanya kepada ...','Guru|Tidak siapa-siapa|Tidak bertanya',0],['ج adalah huruf ...','Jim|Dal|Ra',0]
-},
-{
- id:'pjok',name:'PJOK',icon:'⚽',desc:'Belajar olahraga dan kesehatan',
- lessons:[
- ['Gerak Dasar','Gerak dasar meliputi berjalan, berlari, melompat, dan melempar.','Lakukan gerakan di tempat aman.'],
- ['Kebersihan','Tubuh sehat dijaga dengan mandi dan mencuci tangan.','Cuci tangan sebelum makan.'],
- ['Makanan Sehat','Tubuh membutuhkan makanan bergizi dan air putih.','Makan buah dan sayur.'],
- ['Bermain Aman','Saat berolahraga lakukan pemanasan dan ikuti aturan.','Gunakan tempat bermain yang aman.']
- ],
- q:[
- ['Sebelum olahraga ...','Pemanasan|Tidur|Makan banyak',0],['Bergerak cepat dengan kaki ...','Berlari|Duduk|Tidur',0],['Mencuci tangan sebelum ...','Makan|Bermain lumpur|Tidur saja',0],['Minuman baik untuk tubuh ...','Air putih|Sirup saja|Minuman manis',0],['Setelah olahraga ...','Pendinginan|Langsung berlari|Tidak minum',0],['Contoh gerak melompat ...','Melompat ke depan|Membaca|Menggambar',0],['Agar gigi bersih ...','Menggosok gigi|Membiarkan kotor|Makan permen terus',0],['Buah dan sayur termasuk ...','Bergizi|Mainan|Alat tulis',0],['Saat bermain menjaga ...','Keselamatan|Pertengkaran|Kekacauan',0],['Jika haus minum ...','Air putih|Pasir|Minyak',0],['Berjalan menggunakan ...','Kaki|Telinga|Rambut',0],['Olahraga membuat tubuh ...','Sehat|Lemah|Tidak bergerak',0],['Mandi agar tubuh ...','Bersih|Lengket|Berdebu',0],['Saat bermain bola menggunakan ...','Kaki|Rambut|Telinga',0],['Tempat olahraga harus ...','Aman|Licin|Berbahaya',0]
-}
+ {id:'pancasila',name:'Pendidikan Pancasila',icon:'🇮🇩',color:'#ff8b8b',desc:'Belajar Pancasila dan sikap baik',
+  lessons:['Mengenal lima sila Pancasila','Menghormati orang tua dan guru','Hidup rukun dengan teman','Menjaga kebersihan lingkungan'],
+  questions:[
+   ['Dasar negara Indonesia adalah ...',['Pancasila','Garuda','Bendera','Peta'],0],
+   ['Lambang negara Indonesia adalah ...',['Harimau','Garuda Pancasila','Gajah','Merpati'],1],
+   ['Sila pertama berbunyi ...',['Persatuan Indonesia','Keadilan sosial','Ketuhanan Yang Maha Esa','Kemanusiaan yang adil'],2],
+   ['Kita harus menghormati ...',['Orang tua dan guru','Mainan saja','Diri sendiri saja','Hewan saja'],0],
+   ['Warna bendera Indonesia adalah ...',['Biru putih','Merah putih','Merah kuning','Hijau putih'],1],
+   ['Jika teman berbeda agama, kita harus ...',['Mengejek','Menjauhi','Menghormati','Memarahi'],2],
+   ['Membuang sampah sebaiknya di ...',['Sungai','Jalan','Halaman','Tempat sampah'],3],
+   ['Sila ketiga mengajarkan kita untuk ...',['Bersatu','Bertengkar','Malas','Boros'],0],
+   ['Saat teman kesulitan, kita sebaiknya ...',['Mengejek','Membantu','Pergi','Diam saja'],1],
+   ['Lambang sila pertama adalah ...',['Pohon beringin','Bintang','Rantai','Padi kapas'],1],
+   ['Bermusyawarah berarti ...',['Bertengkar','Bermain','Berdiskusi bersama','Tidur'],2],
+   ['Kita harus berkata ...',['Kasar','Jujur','Bohong','Keras'],1],
+   ['Contoh hidup rukun adalah ...',['Bermain bersama','Berkelahi','Mengejek','Berebut'],0],
+   ['Sila kelima dilambangkan dengan ...',['Bintang','Rantai','Kepala banteng','Padi dan kapas'],3],
+   ['Saat upacara kita harus ...',['Bercanda','Tertib','Berlari','Tidur'],1]
+  ]},
+ {id:'seni',name:'Seni Budaya',icon:'🎨',color:'#b58af5',desc:'Mengenal warna, gambar, dan seni',
+  lessons:['Mengenal warna dasar','Mengenal bentuk benda','Menggambar dan mewarnai','Mengenal alat musik'],
+  questions:[
+   ['Warna daun biasanya ...',['Merah','Hijau','Ungu','Biru'],1],
+   ['Alat untuk menggambar adalah ...',['Sendok','Pensil','Piring','Sepatu'],1],
+   ['Warna merah dicampur kuning menjadi ...',['Hijau','Ungu','Jingga','Biru'],2],
+   ['Alat musik yang dipukul adalah ...',['Drum','Seruling','Gitar','Biola'],0],
+   ['Bentuk roda adalah ...',['Segitiga','Persegi','Lingkaran','Persegi panjang'],2],
+   ['Warna langit cerah biasanya ...',['Biru','Hitam','Cokelat','Merah'],0],
+   ['Untuk mewarnai kita bisa memakai ...',['Krayon','Penggaris','Penghapus','Gunting'],0],
+   ['Alat musik yang ditiup adalah ...',['Drum','Seruling','Gitar','Kendang'],1],
+   ['Bentuk buku biasanya ...',['Bulat','Segitiga','Persegi panjang','Bintang'],2],
+   ['Warna matahari pada gambar biasanya ...',['Kuning','Hitam','Ungu','Hijau'],0],
+   ['Kegiatan membuat gambar disebut ...',['Menyanyi','Menggambar','Menari','Berlari'],1],
+   ['Gitar dimainkan dengan cara ...',['Ditiup','Dipukul','Dipetik','Digesek'],2],
+   ['Warna biru dicampur kuning menjadi ...',['Hijau','Merah','Ungu','Hitam'],0],
+   ['Bahan untuk membuat kolase dapat berupa ...',['Daun kering','Air minum','Sabun','Bensin'],0],
+   ['Kita harus menjaga alat seni agar ...',['Cepat rusak','Hilang','Awet','Kotor'],2]
+  ]},
+ {id:'matematika',name:'Matematika',icon:'🔢',color:'#63b9ed',desc:'Berhitung jadi menyenangkan',
+  lessons:['Mengenal angka 1 sampai 20','Penjumlahan sederhana','Pengurangan sederhana','Mengenal bentuk dan ukuran'],
+  questions:[
+   ['2 + 3 = ...',['4','5','6','7'],1],
+   ['5 + 4 = ...',['8','9','10','11'],1],
+   ['10 - 3 = ...',['6','7','8','9'],1],
+   ['Angka setelah 9 adalah ...',['8','10','11','12'],1],
+   ['7 + 2 = ...',['8','9','10','11'],1],
+   ['6 - 2 = ...',['3','4','5','6'],1],
+   ['Angka sebelum 15 adalah ...',['13','14','16','17'],1],
+   ['3 + 3 = ...',['5','6','7','8'],1],
+   ['12 - 2 = ...',['8','9','10','11'],2],
+   ['Bentuk yang memiliki 3 sisi adalah ...',['Lingkaran','Segitiga','Persegi','Oval'],1],
+   ['4 + 5 = ...',['7','8','9','10'],2],
+   ['Angka terbesar adalah ...',['5','8','3','2'],1],
+   ['10 + 5 = ...',['13','14','15','16'],2],
+   ['8 - 4 = ...',['2','3','4','5'],2],
+   ['Satu lusin sama dengan ...',['10','11','12','15'],2]
+  ]},
+ {id:'btq',name:'BTQ',icon:'📖',color:'#56cba3',desc:'Belajar huruf hijaiyah',
+  lessons:['Mengenal huruf hijaiyah','Mengenal harakat fathah','Mengenal harakat kasrah','Mengenal harakat dammah'],
+  questions:[
+   ['Huruf pertama hijaiyah adalah ...',['Ba','Alif','Ta','Jim'],1],
+   ['Huruf ب dibaca ...',['Alif','Ba','Ta','Tsa'],1],
+   ['Fathah berbunyi ...',['A','I','U','E'],0],
+   ['Kasrah berbunyi ...',['A','I','U','O'],1],
+   ['Dammah berbunyi ...',['A','I','U','E'],2],
+   ['Huruf ت dibaca ...',['Ba','Ta','Jim','Dal'],1],
+   ['Huruf ج dibaca ...',['Jim','Ha','Kha','Dal'],0],
+   ['Huruf ا dibaca ...',['Ba','Alif','Nun','Mim'],1],
+   ['Huruf م dibaca ...',['Nun','Lam','Mim','Wau'],2],
+   ['Al-Qur’an adalah kitab suci umat ...',['Islam','Kristen','Hindu','Buddha'],0],
+   ['Huruf ن dibaca ...',['Nun','Mim','Sin','Syin'],0],
+   ['Tanda baca di atas huruf adalah ...',['Kasrah','Fathah','Dammah','Sukun'],1],
+   ['Huruf ل dibaca ...',['Mim','Lam','Ra','Kaf'],1],
+   ['Kita membaca Al-Qur’an dengan ...',['Sembarangan','Adab yang baik','Bercanda','Berlari'],1],
+   ['Huruf و dibaca ...',['Wau','Ya','Alif','Ba'],0]
+  ]},
+ {id:'pjok',name:'PJOK',icon:'⚽',color:'#ffbd57',desc:'Tubuh sehat dan kuat',
+  lessons:['Gerak dasar berjalan dan berlari','Mengenal permainan bola','Menjaga kebersihan tubuh','Pentingnya olahraga'],
+  questions:[
+   ['Sebelum olahraga sebaiknya ...',['Tidur','Pemanasan','Makan banyak','Duduk'],1],
+   ['Kita mandi agar tubuh ...',['Kotor','Bersih','Lelah','Basah saja'],1],
+   ['Olahraga membuat tubuh ...',['Sehat','Sakit','Lemah','Malas'],0],
+   ['Bola ditendang menggunakan ...',['Tangan','Kaki','Kepala','Siku'],1],
+   ['Saat haus kita harus minum ...',['Air','Minyak','Sabun','Cat'],0],
+   ['Berjalan menggunakan ...',['Kaki','Telinga','Mata','Tangan saja'],0],
+   ['Setelah olahraga kita sebaiknya ...',['Pendinginan','Langsung tidur','Berlari lagi terus','Tidak minum'],0],
+   ['Kita menggosok gigi menggunakan ...',['Sisir','Sikat gigi','Sendok','Pensil'],1],
+   ['Permainan sepak bola menggunakan ...',['Bola','Raket','Kelereng','Papan'],0],
+   ['Agar sehat kita perlu makan ...',['Makanan bergizi','Permen saja','Keripik saja','Es saja'],0],
+   ['Saat menyeberang jalan kita harus ...',['Berlari cepat','Berhati-hati','Bermain','Menutup mata'],1],
+   ['Lompat menggunakan ...',['Kaki','Hidung','Telinga','Jari'],0],
+   ['Kita mencuci tangan menggunakan ...',['Sabun dan air','Cat','Minyak','Pasir'],0],
+   ['Tidur yang cukup membuat tubuh ...',['Segar','Lemas','Kotor','Sakit'],0],
+   ['Saat bermain kita harus ...',['Curang','Sportif','Marah','Mengejek'],1]
+  ]}
 ];
 
-let data=JSON.parse(localStorage.getItem('azkaraAdventure'))||{
- xp:0,coins:0,stars:0,quizzes:0,total:0,study:0,play:0
-};
-let currentSubject=null,quiz=[],qi=0,score=0,options=[];
-let timerMode='',lastTick=Date.now();
-let puzzle=[],firstCard=null,matches=0,mathN=0,mathScore=0,guessN=0,guessScore=0;
+let data=JSON.parse(localStorage.getItem('smartKids')||'{}');
+data.xp=data.xp||0;data.coins=data.coins||0;data.stars=data.stars||0;
+data.study=data.study||0;data.play=data.play||0;
+data.completed=data.completed||0;data.history=data.history||[];
+let currentQuiz=[],qIndex=0,score=0,quizSubject=null;
+let memoryCards=[],memoryOpen=[],memoryFound=0;
+let mathAnswer=0,mathScore=0,mathRound=0;
+let guessIndex=0,guessScore=0;
+let timerStart=Date.now();
 
-function save(){localStorage.setItem('azkaraAdventure',JSON.stringify(data))}
-function reward(x,c,s=0){
- data.xp+=x;data.coins+=c;data.stars+=s;save();updateStats();
-}
+function save(){localStorage.setItem('smartKids',JSON.stringify(data));updateStats()}
 function updateStats(){
- $('stars').textContent=data.stars;
- $('coins').textContent=data.coins;
- $('xp').textContent=data.xp;
- $('level').textContent=Math.floor(data.xp/100)+1;
- $('xpbar').style.width=(data.xp%100)+'%';
+ document.getElementById('stars').textContent=data.stars;
+ document.getElementById('coins').textContent=data.coins;
+ document.getElementById('level').textContent=Math.floor(data.xp/100)+1;
 }
-function fmt(t){
- t=Math.floor(t);
- return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');
+function addReward(points){
+ data.xp+=points;data.coins+=Math.max(1,Math.floor(points/2));
+ data.stars+=Math.max(1,Math.floor(points/10));save();
 }
-setInterval(()=>{
- let now=Date.now(),d=Math.min(2,(now-lastTick)/1000);
- lastTick=now;
- if(!document.hidden){
-  data.total+=d;
-  if(timerMode==='study')data.study+=d;
-  if(timerMode==='play')data.play+=d;
-  save();
- }
- $('timer').textContent=fmt(data.total);
- if(!$('report').classList.contains('hidden'))renderReport();
-},1000);
-document.addEventListener('visibilitychange',()=>lastTick=Date.now());
-
-function shuffle(arr){
- let a=[...arr];
- for(let i=a.length-1;i>0;i--){
-  let j=Math.floor(Math.random()*(i+1));
-  [a[i],a[j]]=[a[j],a[i]];
- }
- return a;
+function home(){
+ document.getElementById('app').innerHTML=`
+ <section class="hero">
+  <div><h1>Halo, Petualang Cilik! 🌈</h1>
+  <p>Yuk belajar, bermain, dan kumpulkan bintang!</p>
+  <button class="btn" onclick="showSubjects()">Mulai Belajar 🚀</button></div>
+  <div class="mascot">🦊</div>
+ </section>
+ <div class="grid">
+  <div class="card center">⭐<h2>${data.stars}</h2><div class="small">Total bintang</div></div>
+  <div class="card center">⚡<h2>${data.xp}</h2><div class="small">Total XP</div></div>
+  <div class="card center">🏆<h2>${data.completed}</h2><div class="small">Kuis selesai</div></div>
+ </div>
+ <h2 class="section-title">📚 Mata Pelajaran</h2>
+ <div class="grid">${subjects.map(s=>`
+ <div class="card subject" style="--color:${s.color}" onclick="openSubject('${s.id}')">
+ <div class="emoji">${s.icon}</div><h3>${s.name}</h3><div class="small">${s.desc}</div>
+ </div>`).join('')}</div>
+ <h2 class="section-title">🎮 Taman Permainan</h2>
+ <div class="grid">
+  <div class="card game" onclick="memoryGame()"><div class="emoji">🧠</div><b>Game Memori</b><p class="small">Cari pasangan gambar!</p></div>
+  <div class="card game" onclick="mathGame()"><div class="emoji">🔢</div><b>Game Hitung</b><p class="small">Asah kemampuan berhitung!</p></div>
+  <div class="card game" onclick="guessGame()"><div class="emoji">🕵️</div><b>Tebak Gambar</b><p class="small">Tebak gambar yang muncul!</p></div>
+  <div class="card game" onclick="colorGame()"><div class="emoji">🖍️</div><b>Mewarnai</b><p class="small">Berkreasi dengan warna!</p></div>
+ </div>
+ <div class="panel"><h2>👨‍👩‍👧 Dashboard Orang Tua</h2>
+ <p>Progres belajar dan aktivitas anak.</p>
+ <button class="btn secondary" onclick="parentDashboard()">Buka laporan</button></div>`;
+ updateStats();
 }
-function card(s){
- return `<div class="card"><div class="icon">${s.icon}</div><h3>${s.name}</h3><p>${s.desc}</p><button class="primary" onclick="openSubject('${s.id}')">Jelajahi</button></div>`;
-}
-function renderCards(){
- $('homeCards').innerHTML=subjects.map(card).join('');
- $('subjects').innerHTML=subjects.map(card).join('');
-}
-function navigate(page){
- document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
- $(page).classList.remove('hidden');
- document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
- timerMode=page==='learn'?'study':page==='play'?'play':'';
- if(page==='report')renderReport();
-}
-document.querySelectorAll('nav button').forEach(b=>{
- b.addEventListener('click',()=>navigate(b.dataset.page));
-});
-
+function showSubjects(){document.getElementById('app').scrollIntoView({behavior:'smooth'})}
+function backButton(){return `<button class="back" onclick="home()">← Kembali ke Beranda</button>`}
 function openSubject(id){
- currentSubject=subjects.find(s=>s.id===id);
- timerMode='study';
- let p=$('lessonPanel');
- p.classList.remove('hidden');
- p.innerHTML=`<button class="back" onclick="closeLesson()">← Kembali</button>
- <h2>${currentSubject.icon} ${currentSubject.name}</h2>
- ${currentSubject.lessons.map((l,i)=>`<div class="lesson"><h3>📘 ${i+1}. ${l[0]}</h3><p>${l[1]}</p><b>Contoh:</b> ${l[2]}</div>`).join('')}
- <button class="primary wide" onclick="startQuiz()">Mulai Kuis 15 Soal ⭐</button>`;
- p.scrollIntoView({behavior:'smooth'});
+ let s=subjects.find(x=>x.id===id);
+ document.getElementById('app').innerHTML=`
+ ${backButton()}<div class="panel">
+ <div class="center"><div class="big">${s.icon}</div><h1>${s.name}</h1><p>${s.desc}</p></div>
+ <h2>📘 Materi Pembelajaran</h2>
+ ${s.lessons.map((l,i)=>`<div class="card" style="margin:9px 0"><b>${i+1}. ${l}</b><p class="small">Pelajari materi ini dengan bantuan guru atau orang tua, lalu lanjutkan ke kuis.</p></div>`).join('')}
+ <button class="btn green" onclick="startQuiz('${id}')">Mulai Kuis 📝</button>
+ </div>`;
 }
-function closeLesson(){$('lessonPanel').classList.add('hidden')}
-function startQuiz(){
- quiz=shuffle(currentSubject.q).slice(0,15);
- qi=0;score=0;showQuestion();
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function startQuiz(id){
+ quizSubject=subjects.find(s=>s.id===id);
+ currentQuiz=shuffle(quizSubject.questions).slice(0,15);
+ qIndex=0;score=0;showQuestion();
 }
 function showQuestion(){
- let q=quiz[qi];
- options=shuffle(q[1].split('|').map((v,i)=>({v,ok:i===q[2]})));
- $('lessonPanel').innerHTML=`
- <button class="back" onclick="openSubject('${currentSubject.id}')">← Kembali</button>
- <h2>⭐ Kuis ${currentSubject.name}</h2>
- <div class="progress"><span style="width:${qi/15*100}%"></span></div>
- <p>Soal ${qi+1} dari 15</p>
- <div class="question">${q[0]}</div>
- <div class="answers">${options.map((o,i)=>`<button class="answer" onclick="answerQuestion(${i})">${'ABC'[i]}. ${o.v}</button>`).join('')}</div>
- <div id="feedback"></div>`;
+ let q=currentQuiz[qIndex];
+ document.getElementById('app').innerHTML=`
+ ${backButton()}<div class="panel">
+ <div class="top"><b>${quizSubject.icon} ${quizSubject.name}</b><b>Soal ${qIndex+1}/15</b></div>
+ <div class="progress" style="margin:16px 0"><div style="width:${qIndex/15*100}%"></div></div>
+ <h2>${q[0]}</h2>
+ ${shuffle(q[1].map((v,i)=>({v,correct:i===q[2]}))).map((o)=>`
+ <button class="option" onclick="answer(this,${o.correct})">${o.v}</button>`).join('')}
+ <p class="small">Jawab dengan teliti ya! 🌟</p>
+ </div>`;
 }
-function answerQuestion(i){
- document.querySelectorAll('#lessonPanel .answer').forEach(b=>b.disabled=true);
- let correct=options[i].ok;
- if(correct)score++;
- $('feedback').innerHTML=`<div class="lesson">${correct?'🌟 Hebat! Jawaban benar.':'💡 Belum tepat. Tetap semangat!' }<br><button class="primary" onclick="nextQuestion()">${qi===14?'Lihat Hasil':'Lanjut ➜'}</button></div>`;
-}
-function nextQuestion(){
- qi++;
- if(qi<15)showQuestion();
- else finishQuiz();
+function answer(button,correct){
+ let opts=document.querySelectorAll('.option');
+ opts.forEach(b=>b.disabled=true);
+ if(correct){button.classList.add('correct');score++}
+ else{button.classList.add('wrong')}
+ setTimeout(()=>{
+ qIndex++;
+ if(qIndex<currentQuiz.length)showQuestion();else finishQuiz();
+ },650);
 }
 function finishQuiz(){
- let stars=score>=13?3:score>=9?2:score>=5?1:0;
- data.quizzes++;
- reward(score*5,score*2,stars);
- $('lessonPanel').innerHTML=`<div style="text-align:center"><div class="icon">🏆</div><h2>Kuis Selesai!</h2><h1>${score}/15</h1><p>Kamu mendapat ${stars} ⭐ dan ${score*2} 🪙</p><button class="primary" onclick="startQuiz()">Ulangi dengan Soal Baru</button><button class="secondary" onclick="openSubject('${currentSubject.id}')">Kembali ke Materi</button></div>`;
+ let points=score*5;
+ addReward(points);data.completed++;
+ data.study+=Math.max(1,Math.round(currentQuiz.length/3));
+ data.history.unshift({name:quizSubject.name,score:score+'/'+currentQuiz.length,date:new Date().toLocaleDateString('id-ID')});
+ data.history=data.history.slice(0,20);save();
+ document.getElementById('app').innerHTML=`
+ <div class="panel center">
+ <div class="big">🏆</div><h1>Kuis Selesai!</h1>
+ <h2>Nilai kamu: ${score}/${currentQuiz.length}</h2>
+ <p>${score>=12?'Hebat sekali! Kamu luar biasa! 🌟':score>=8?'Bagus! Terus berlatih ya! 😊':'Jangan menyerah, ayo belajar lagi! 💪'}</p>
+ <div class="grid"><div class="card">⭐<h2>+${Math.max(1,Math.floor(points/10))}</h2>Bintang</div><div class="card">⚡<h2>+${points}</h2>XP</div></div>
+ <button class="btn" onclick="openSubject('${quizSubject.id}')">Ulangi Kuis</button>
+ <button class="btn secondary" onclick="home()">Beranda</button>
+ </div>`;
 }
-
-function game(title,html){
- timerMode='play';
- let p=$('gamePanel');
- p.classList.remove('hidden');
- p.innerHTML=`<button class="back" onclick="closeGame()">← Kembali ke Play Time</button><h2>${title}</h2>${html}`;
- p.scrollIntoView({behavior:'smooth'});
+function memoryGame(){
+ let emojis=['🐱','🐶','🦁','🐸','🐼','🦋','🍎','🌈'];
+ memoryCards=shuffle([...emojis,...emojis]);memoryOpen=[];memoryFound=0;
+ renderMemory();
 }
-function closeGame(){$('gamePanel').classList.add('hidden')}
-function startPuzzle(){
- puzzle=[1,2,3,4,5,6,7,8,0];
- for(let n=0;n<80;n++){
-  let z=puzzle.indexOf(0),moves=[z-3,z+3];
-  if(z%3>0)moves.push(z-1);
-  if(z%3<2)moves.push(z+1);
-  let valid=moves.filter(i=>i>=0&&i<9);
-  let j=valid[Math.floor(Math.random()*valid.length)];
-  [puzzle[z],puzzle[j]]=[puzzle[j],puzzle[z]];
- }
- drawPuzzle();
+function renderMemory(){
+ document.getElementById('app').innerHTML=`
+ ${backButton()}<div class="panel center"><h1>🧠 Game Memori</h1>
+ <p>Cari dua gambar yang sama!</p>
+ <h3>Pasangan ditemukan: ${memoryFound}/8</h3>
+ <div class="memory-grid">${memoryCards.map((c,i)=>`
+ <button class="memory" onclick="flipMemory(${i})">${c.open||c.found?c.emoji:'❔'}</button>`).join('')}</div>
+ </div>`;
 }
-function drawPuzzle(){
- game('🧩 Puzzle Geser',`<p>Susun angka dari 1 sampai 8.</p><div class="puzzle">${puzzle.map((v,i)=>`<button class="piece ${v===0?'blank':''}" onclick="movePiece(${i})">${v||''}</button>`).join('')}</div><p id="pmsg">Ayo susun sampai urut!</p><button class="secondary" onclick="startPuzzle()">Acak ulang</button>`);
-}
-function movePiece(i){
- let z=puzzle.indexOf(0);
- if((Math.abs(i-z)===1&&Math.floor(i/3)===Math.floor(z/3))||Math.abs(i-z)===3){
-  [puzzle[i],puzzle[z]]=[puzzle[z],puzzle[i]];
-  if(puzzle.every((v,j)=>v===(j===8?0:j+1))){
-   reward(15,8,1);
-   drawPuzzle();
-   $('pmsg').textContent='🎉 Berhasil! +15 XP dan +8 koin!';
-  }else drawPuzzle();
- }
-}
-function startMemory(){
- let deck=shuffle(['🐶','🐱','🐰','🦊','🐼','🐸','🦁','🐵'].flatMap(x=>[x,x]));
- firstCard=null;matches=0;
- game('🃏 Memory Match',`<p>Temukan 8 pasangan gambar.</p><div class="mini">${deck.map(v=>`<button class="tile" data-v="${v}" onclick="flipCard(this)">❔</button>`).join('')}</div><p id="memmsg">Pasangan: 0/8</p>`);
-}
-function flipCard(el){
- if(el.disabled||el===firstCard)return;
- el.textContent=el.dataset.v;
- if(!firstCard){firstCard=el;return}
- let a=firstCard,b=el;
- if(a.dataset.v===b.dataset.v){
-  a.disabled=true;b.disabled=true;
-  a.classList.add('done');b.classList.add('done');
-  matches++;firstCard=null;
-  $('memmsg').textContent=`Pasangan: ${matches}/8`;
-  if(matches===8){reward(20,10,1);$('memmsg').textContent='🎉 Semua pasangan ditemukan! +20 XP';}
- }else{
-  firstCard=null;
-  setTimeout(()=>{a.textContent='❔';b.textContent='❔'},700);
+function flipMemory(i){
+ let c=memoryCards[i];if(c.open||c.found||memoryOpen.length===2)return;
+ c.open=true;c.emoji=memoryCards[i];memoryOpen.push(i);
+ renderMemory();
+ if(memoryOpen.length===2){
+ let [a,b]=memoryOpen;
+ if(memoryCards[a]===memoryCards[b]){memoryCards[a]={found:true,emoji:memoryCards[a]};memoryCards[b]={found:true,emoji:memoryCards[b]};memoryFound++;memoryOpen=[];setTimeout(()=>{
+ if(memoryFound===8){addReward(30);data.play+=3;save();alert('Hebat! Semua pasangan ditemukan! +30 XP');home()}
+ else renderMemory();
+ },300)}
+ else setTimeout(()=>{memoryCards[a]={};memoryCards[b]={};memoryOpen=[];renderMemory()},850);
  }
 }
-function startMath(){mathN=0;mathScore=0;mathQuestion()}
-function mathQuestion(){
- if(mathN>=10){
-  reward(mathScore*3,mathScore*2,mathScore>=8?1:0);
-  game('🔢 Math Adventure',`<h2>Selesai!</h2><p>Jawaban benar: ${mathScore}/10</p><button class="primary" onclick="startMath()">Main lagi</button>`);
-  return;
- }
- let a=Math.ceil(Math.random()*9),b=Math.ceil(Math.random()*9);
- let sub=Math.random()>.5;
- if(sub&&b>a)[a,b]=[b,a];
- let ans=sub?a-b:a+b;
- let choices=shuffle([...new Set([ans,ans+1,Math.max(0,ans-1),ans+2])]).slice(0,3);
- if(!choices.includes(ans))choices[0]=ans;
- choices=shuffle(choices);
- game('🔢 Math Adventure',`<p>Soal ${mathN+1}/10</p><div class="question">${a} ${sub?'−':'+'} ${b} = ?</div><div class="answers">${choices.map(v=>`<button class="answer" onclick="mathAnswer(${v},${ans})">${v}</button>`).join('')}</div><p id="mathmsg"></p>`);
+function mathGame(){mathScore=0;mathRound=0;nextMath()}
+function nextMath(){
+ if(mathRound>=10){addReward(mathScore*5);data.play+=2;save();document.getElementById('app').innerHTML=`<div class="panel center"><h1>🎉 Selesai!</h1><h2>Skor ${mathScore}/10</h2><button class="btn" onclick="home()">Beranda</button></div>`;return}
+ let a=Math.floor(Math.random()*10)+1,b=Math.floor(Math.random()*10)+1;
+ let minus=Math.random()>.5&&a>=b;
+ mathAnswer=minus?a-b:a+b;
+ document.getElementById('app').innerHTML=`
+ ${backButton()}<div class="panel center"><div class="big">🔢</div>
+ <h1>Game Berhitung</h1><p>Soal ${mathRound+1}/10 · Skor ${mathScore}</p>
+ <h1>${a} ${minus?'-':'+'} ${b} = ?</h1>
+ <div class="grid">${shuffle([mathAnswer,mathAnswer+1,Math.max(0,mathAnswer-1),mathAnswer+2]).map(n=>`<button class="btn secondary" onclick="checkMath(${n})">${n}</button>`).join('')}</div>
+ </div>`;
 }
-function mathAnswer(v,ans){
- if(v===ans){mathScore++;$('mathmsg').textContent='🌟 Benar!'}
- else $('mathmsg').textContent=`Jawabannya ${ans}. Tetap semangat!`;
- document.querySelectorAll('#gamePanel .answer').forEach(b=>b.disabled=true);
- mathN++;
- setTimeout(mathQuestion,900);
+function checkMath(n){if(n===mathAnswer)mathScore++;mathRound++;nextMath()}
+const guesses=[['🐘','Gajah'],['🦋','Kupu-kupu'],['🍎','Apel'],['🐱','Kucing'],['🐟','Ikan'],['🌻','Bunga matahari'],['🚗','Mobil'],['🐸','Katak']];
+function guessGame(){guessIndex=0;guessScore=0;showGuess()}
+function showGuess(){
+ if(guessIndex>=guesses.length){addReward(guessScore*5);data.play+=2;save();document.getElementById('app').innerHTML=`<div class="panel center"><h1>🎉 Selesai!</h1><h2>Benar ${guessScore}/${guesses.length}</h2><button class="btn" onclick="home()">Beranda</button></div>`;return}
+ let g=guesses[guessIndex];
+ document.getElementById('app').innerHTML=`
+ ${backButton()}<div class="panel center"><h1>🕵️ Tebak Gambar</h1>
+ <p>Gambar ${guessIndex+1}/${guesses.length}</p><div class="big">${g[0]}</div>
+ <h2>Apakah nama gambar ini?</h2>
+ ${shuffle([g[1],'Harimau','Pisang','Burung']).map(x=>`<button class="option" onclick="checkGuess('${x.replace(/'/g,"")}','${g[1]}')">${x}</button>`).join('')}
+ </div>`;
 }
-const pictures=[['🐘','Gajah'],['🦋','Kupu-kupu'],['🍎',
+function checkGuess(x,correct){if(x===correct)guessScore++;guessIndex++;showGuess()}
+function colorGame(){
+ document.getElementById('app').innerHTML=`
+ ${backButton()}<div class="panel center"><h1>🖍️ Arena Mewarnai</h1>
+ <p>Pilih warna, lalu sentuh gambar untuk mewarnai.</p>
+ <div>${['#ff7777','#ffcf55','#65cb92','#6bb8f5','#b18af5','#ff91c5','#ffffff','#333333'].map(c=>`<button onclick="paintColor='${c}'" style="background:${c};width:35px;height:35px;border-radius:50%;border:2px solid #ddd;margin:4px"></button>`).join('')}</div>
+ <canvas id="paint" width="320" height="260"></canvas>
+ <p><button class="btn secondary" onclick="clearPaint()">Hapus warna</button></p>
+ </div>`;
+ let canvas=document.getElementById('paint'),ctx=canvas.getContext('2d');
+ ctx.font='190px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#eeeeee';ctx.fillText('🌸',160,130);
+ canvas.onclick=e=>{let r=canvas.getBoundingClientRect();ctx.beginPath();ctx.arc((e.clientX-r.left)*canvas.width/r.width,(e.clientY-r.top)*canvas.height/r.height,22,0,Math.PI*2);ctx.fillStyle=paintColor;ctx.fill()};
+}
+let paintColor='#ff7777';
+function clearPaint(){colorGame()}
+function parentDashboard(){
+ docu
