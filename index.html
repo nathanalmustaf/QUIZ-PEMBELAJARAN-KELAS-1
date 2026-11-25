@@ -635,6 +635,72 @@ footer b{
  background:linear-gradient(90deg,#e83e78,#ffb347);
  border-radius:20px;
 }
+/* TAHAP 6 - PLAY TIME & AVATAR */
+
+.play-card,.avatar-shop-card{
+ background:#211d27;
+ border:1px solid #563244;
+ border-radius:15px;
+ padding:16px;
+ margin:12px 0;
+}
+
+.play-card button,.avatar-shop-card button{
+ margin-top:10px;
+}
+
+.coloring-canvas{
+ width:100%;
+ background:white;
+ border-radius:12px;
+ border:3px solid #e83e78;
+ touch-action:none;
+ display:block;
+}
+
+.color-palette{
+ display:flex;
+ flex-wrap:wrap;
+ gap:9px;
+ margin:15px 0;
+}
+
+.color-dot{
+ width:35px;
+ height:35px;
+ border-radius:50%;
+ border:3px solid white;
+}
+
+.avatar-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px;
+}
+
+.avatar-item{
+ background:#302633;
+ border:1px solid #563244;
+ border-radius:13px;
+ padding:15px 8px;
+ text-align:center;
+}
+
+.avatar-face{
+ font-size:43px;
+ margin-bottom:8px;
+}
+
+.avatar-item button{
+ width:100%;
+ margin-top:10px;
+}
+
+.current-avatar{
+ font-size:65px;
+ text-align:center;
+ padding:15px;
+}
 </style>
 </head>
 
@@ -1917,6 +1983,323 @@ renderTab=function(tab){
 
  stage4RenderTab(tab);
  addAchievementNavigation();
+};
+/* TAHAP 6 - PLAY TIME & AVATAR SHOP */
+
+const stage5RenderTab = renderTab;
+
+/* DATA AVATAR */
+
+if(!Array.isArray(data.ownedAvatars)){
+ data.ownedAvatars=["🐱"];
+}
+
+if(!data.avatar){
+ data.avatar="🐱";
+}
+
+const avatarCatalog=[
+ {icon:"🐱",name:"Kucing",price:0},
+ {icon:"🐼",name:"Panda",price:20},
+ {icon:"🦊",name:"Rubah",price:30},
+ {icon:"🐸",name:"Katak",price:40},
+ {icon:"🐰",name:"Kelinci",price:50},
+ {icon:"🐯",name:"Harimau",price:60},
+ {icon:"🐲",name:"Naga",price:80},
+ {icon:"👑",name:"Royal",price:100}
+];
+
+saveData();
+
+/* MENU PLAY TIME */
+
+function renderPlayTime(){
+ document.getElementById("dashboard").innerHTML=`
+  <div class="topbar">
+   <h2>SMART <span>KIDS</span></h2>
+   <div class="status">PLAY TIME<br>ACTIVE ●</div>
+  </div>
+
+  <div class="navbar">
+   <button class="nav-btn" onclick="renderTab('home')">⌂ BERANDA</button>
+   <button class="nav-btn" onclick="renderTab('learn')">📚 BELAJAR</button>
+   <button class="nav-btn" onclick="renderTab('quiz')">🎯 QUIZ</button>
+   <button class="nav-btn" onclick="renderTab('achievements')">🏆 REWARD</button>
+   <button class="nav-btn active">🎮 PLAY TIME</button>
+  </div>
+
+  <div class="play-card">
+   <h2>🎨 COLORING BOOK</h2>
+   <p>Warnai gambar menggunakan jari kamu!</p>
+   <button class="learn-btn" onclick="renderColoringGame()">
+    MULAI MEWARNAI
+   </button>
+  </div>
+
+  <div class="play-card">
+   <h2>🛍️ AVATAR SHOP</h2>
+   <p>Kumpulkan koin dan beli avatar favoritmu!</p>
+   <div class="current-avatar">${data.avatar}</div>
+   <p style="text-align:center">Avatar kamu sekarang</p>
+   <button class="learn-btn" onclick="renderAvatarShop()">
+    BUKA TOKO AVATAR
+   </button>
+  </div>
+
+  <div class="play-card">
+   <h3>🪙 KOIN KAMU</h3>
+   <h2>${data.coins} KOIN</h2>
+  </div>
+
+  <footer>
+   SMART KIDS ADVENTURE
+   <b>CREATED BY MOH NATHAN ALMUSTAF</b>
+  </footer>
+ `;
+}
+
+/* COLORING BOOK */
+
+let brushColor="#e83e78";
+
+function renderColoringGame(){
+ document.getElementById("dashboard").innerHTML=`
+  <div class="topbar">
+   <h2>COLORING <span>BOOK</span></h2>
+   <div class="status">CREATIVE MODE ●</div>
+  </div>
+
+  <div class="play-card">
+   <h3>🎨 PILIH WARNA</h3>
+   <div class="color-palette">
+    ${["#e83e78","#ff5252","#ff9800","#ffeb3b",
+       "#4caf50","#00bcd4","#2196f3","#673ab7",
+       "#ffffff","#795548","#000000"].map(c=>`
+      <button class="color-dot"
+       style="background:${c}"
+       onclick="setBrushColor('${c}')"></button>
+    `).join("")}
+   </div>
+
+   <canvas id="colorCanvas"
+    class="coloring-canvas"
+    width="700"
+    height="450"></canvas>
+
+   <p>Gunakan jari untuk mewarnai gambar di atas.</p>
+
+   <button class="learn-btn" onclick="clearColoring()">
+    🔄 RESET GAMBAR
+   </button>
+
+   <button class="learn-btn" onclick="saveColoring()">
+    💾 SIMPAN GAMBAR
+   </button>
+
+   <button class="nav-btn" onclick="renderPlayTime()">
+    ← KEMBALI
+   </button>
+  </div>
+ `;
+
+ initColorCanvas();
+}
+
+function setBrushColor(color){
+ brushColor=color;
+}
+
+function initColorCanvas(){
+ const canvas=document.getElementById("colorCanvas");
+ const ctx=canvas.getContext("2d");
+
+ function drawTemplate(){
+  ctx.fillStyle="white";
+  ctx.fillRect(0,0,700,450);
+
+  ctx.strokeStyle="#222";
+  ctx.lineWidth=5;
+  ctx.lineCap="round";
+  ctx.lineJoin="round";
+
+  // Matahari
+  ctx.beginPath();
+  ctx.arc(570,85,45,0,Math.PI*2);
+  ctx.stroke();
+
+  // Rumah
+  ctx.beginPath();
+  ctx.moveTo(160,230);
+  ctx.lineTo(350,90);
+  ctx.lineTo(540,230);
+  ctx.lineTo(540,390);
+  ctx.lineTo(160,390);
+  ctx.closePath();
+  ctx.stroke();
+
+  // Pintu
+  ctx.strokeRect(305,285,90,105);
+
+  // Jendela
+  ctx.strokeRect(205,260,65,65);
+  ctx.strokeRect(430,260,65,65);
+
+  // Pohon
+  ctx.beginPath();
+  ctx.arc(80,260,45,0,Math.PI*2);
+  ctx.stroke();
+  ctx.strokeRect(65,305,30,85);
+
+  // Awan
+  ctx.beginPath();
+  ctx.arc(100,85,30,Math.PI,0);
+  ctx.arc(145,85,30,Math.PI,0);
+  ctx.lineTo(70,85);
+  ctx.stroke();
+ }
+
+ drawTemplate();
+
+ let drawing=false;
+
+ canvas.addEventListener("pointerdown",e=>{
+  drawing=true;
+  canvas.setPointerCapture(e.pointerId);
+  const r=canvas.getBoundingClientRect();
+  ctx.beginPath();
+  ctx.moveTo(
+   (e.clientX-r.left)*canvas.width/r.width,
+   (e.clientY-r.top)*canvas.height/r.height
+  );
+ });
+
+ canvas.addEventListener("pointermove",e=>{
+  if(!drawing)return;
+
+  const r=canvas.getBoundingClientRect();
+  ctx.lineTo(
+   (e.clientX-r.left)*canvas.width/r.width,
+   (e.clientY-r.top)*canvas.height/r.height
+  );
+
+  ctx.strokeStyle=brushColor;
+  ctx.lineWidth=18;
+  ctx.lineCap="round";
+  ctx.lineJoin="round";
+  ctx.stroke();
+ });
+
+ function stopDrawing(){
+  drawing=false;
+ }
+
+ canvas.addEventListener("pointerup",stopDrawing);
+ canvas.addEventListener("pointercancel",stopDrawing);
+}
+
+function clearColoring(){
+ initColorCanvas();
+}
+
+function saveColoring(){
+ const canvas=document.getElementById("colorCanvas");
+ const link=document.createElement("a");
+ link.download="hasil-mewarnai.png";
+ link.href=canvas.toDataURL("image/png");
+ link.click();
+}
+
+/* TOKO AVATAR */
+
+function renderAvatarShop(){
+ document.getElementById("dashboard").innerHTML=`
+  <div class="topbar">
+   <h2>AVATAR <span>SHOP</span></h2>
+   <div class="status">SHOP ●</div>
+  </div>
+
+  <div class="play-card">
+   <h2>🛍️ TOKO AVATAR</h2>
+   <div class="current-avatar">${data.avatar}</div>
+   <p style="text-align:center">Avatar aktif kamu</p>
+   <h3 style="text-align:center">🪙 ${data.coins} KOIN</h3>
+  </div>
+
+  <div class="avatar-grid">
+   ${avatarCatalog.map(a=>{
+    const owned=data.ownedAvatars.includes(a.icon);
+    const active=data.avatar===a.icon;
+
+    return `
+     <div class="avatar-item">
+      <div class="avatar-face">${a.icon}</div>
+      <b>${a.name}</b>
+      <p>${a.price===0?"GRATIS":"🪙 "+a.price+" KOIN"}</p>
+
+      <button class="learn-btn"
+       onclick="buyOrEquipAvatar('${a.icon}',${a.price})">
+       ${active?"DIPAKAI":owned?"PAKAI": "BELI"}
+      </button>
+     </div>
+    `;
+   }).join("")}
+  </div>
+
+  <button class="nav-btn" onclick="renderPlayTime()">
+   ← KEMBALI
+  </button>
+ `;
+}
+
+function buyOrEquipAvatar(icon,price){
+ const owned=data.ownedAvatars.includes(icon);
+
+ if(!owned){
+  if(data.coins<price){
+   alert("Koin kamu belum cukup! Ayo belajar dan kumpulkan koin.");
+   return;
+  }
+
+  data.coins-=price;
+  data.ownedAvatars.push(icon);
+ }
+
+ data.avatar=icon;
+ saveData();
+
+ alert(owned?"Avatar berhasil dipakai!":"Avatar berhasil dibeli!");
+ renderAvatarShop();
+}
+
+/* NAVIGASI */
+
+function addStage6Navigation(){
+ const navbar=document.querySelector(".navbar");
+ if(!navbar)return;
+
+ if(!navbar.querySelector("[data-playtime-nav]")){
+  const button=document.createElement("button");
+  button.className="nav-btn";
+  button.innerHTML="🎮 PLAY TIME";
+  button.setAttribute("data-playtime-nav","yes");
+  button.onclick=()=>renderTab("playtime");
+  navbar.appendChild(button);
+ }
+}
+
+renderTab=function(tab){
+ if(tab==="playtime"){
+  renderPlayTime();
+  return;
+ }
+
+ if(tab==="avatars"){
+  renderAvatarShop();
+  return;
+ }
+
+ stage5RenderTab(tab);
+ addStage6Navigation();
 };
 </script>
 
