@@ -575,6 +575,66 @@ footer b{
 .quiz-subject small{
  color:#bbaab5;
 }
+/* TAHAP 5 - ACHIEVEMENT */
+
+.achievement-box{
+ background:#211d27;
+ border:1px solid #563244;
+ border-radius:15px;
+ padding:16px;
+ margin:14px 0;
+}
+
+.achievement-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px;
+ margin-top:15px;
+}
+
+.achievement-card{
+ background:#302633;
+ border:1px solid #563244;
+ border-radius:12px;
+ padding:15px 8px;
+ text-align:center;
+}
+
+.achievement-card.locked{
+ opacity:.4;
+ filter:grayscale(1);
+}
+
+.achievement-icon{
+ font-size:34px;
+ margin-bottom:8px;
+}
+
+.achievement-card b{
+ display:block;
+ color:#fff;
+ font-size:13px;
+}
+
+.achievement-card small{
+ display:block;
+ color:#c9b7c2;
+ margin-top:6px;
+}
+
+.achievement-progress{
+ height:9px;
+ background:#151219;
+ border-radius:20px;
+ overflow:hidden;
+ margin-top:12px;
+}
+
+.achievement-progress-fill{
+ height:100%;
+ background:linear-gradient(90deg,#e83e78,#ffb347);
+ border-radius:20px;
+}
 </style>
 </head>
 
@@ -1729,6 +1789,134 @@ renderTab=function(tab){
 
  stage3RenderTab(tab);
  addQuizNavigation();
+};
+/* TAHAP 5 - ACHIEVEMENT & REWARD */
+
+const stage4RenderTab = renderTab;
+
+const achievementList = [
+ {
+  name:"Pemula",
+  icon:"🌱",
+  description:"Kumpulkan 10 XP",
+  unlocked:()=>data.xp>=10
+ },
+ {
+  name:"Semangat Belajar",
+  icon:"📚",
+  description:"Kumpulkan 50 XP",
+  unlocked:()=>data.xp>=50
+ },
+ {
+  name:"Bintang Kecil",
+  icon:"⭐",
+  description:"Kumpulkan 100 XP",
+  unlocked:()=>data.xp>=100
+ },
+ {
+  name:"Kolektor Koin",
+  icon:"🪙",
+  description:"Kumpulkan 50 koin",
+  unlocked:()=>data.coins>=50
+ },
+ {
+  name:"Penjelajah Ilmu",
+  icon:"🧭",
+  description:"Selesaikan 5 materi",
+  unlocked:()=>Array.isArray(data.lessonDone)&&data.lessonDone.length>=5
+ },
+ {
+  name:"Master Belajar",
+  icon:"🏆",
+  description:"Selesaikan 10 materi",
+  unlocked:()=>Array.isArray(data.lessonDone)&&data.lessonDone.length>=10
+ }
+];
+
+function renderAchievements(){
+ const unlockedCount=achievementList.filter(a=>a.unlocked()).length;
+ const progress=Math.round(unlockedCount/achievementList.length*100);
+
+ document.getElementById("dashboard").innerHTML=`
+  <div class="topbar">
+   <h2>SMART <span>KIDS</span></h2>
+   <div class="status">REWARD ARENA<br>ACTIVE ●</div>
+  </div>
+
+  <div class="navbar">
+   <button class="nav-btn" onclick="renderTab('home')">⌂ BERANDA</button>
+   <button class="nav-btn" onclick="renderTab('learn')">📚 BELAJAR</button>
+   <button class="nav-btn" onclick="renderTab('quiz')">🎯 QUIZ</button>
+   <button class="nav-btn active">🏆 REWARD</button>
+   <button class="nav-btn" onclick="renderTab('profile')">□ PROFIL</button>
+  </div>
+
+  <div class="achievement-box">
+   <h2>🏆 ACHIEVEMENT CENTER</h2>
+   <p>Kumpulkan XP dan selesaikan materi untuk membuka badge!</p>
+
+   <div class="quiz-score">
+    <div class="panel">
+     <h3>${data.xp}</h3>
+     <p>TOTAL XP</p>
+    </div>
+    <div class="panel">
+     <h3>${data.coins}</h3>
+     <p>KOIN</p>
+    </div>
+    <div class="panel">
+     <h3>${unlockedCount}/${achievementList.length}</h3>
+     <p>BADGE</p>
+    </div>
+   </div>
+
+   <p>PROGRES PENCAPAIAN: ${progress}%</p>
+   <div class="achievement-progress">
+    <div class="achievement-progress-fill"
+     style="width:${progress}%"></div>
+   </div>
+  </div>
+
+  <div class="achievement-box">
+   <h3>YOUR BADGES</h3>
+   <div class="achievement-grid">
+    ${achievementList.map(a=>`
+     <div class="achievement-card ${a.unlocked()?"":"locked"}">
+      <div class="achievement-icon">${a.icon}</div>
+      <b>${a.name}</b>
+      <small>${a.unlocked()?"✓ TERBUKA":"🔒 TERKUNCI"}</small>
+      <small>${a.description}</small>
+     </div>
+    `).join("")}
+   </div>
+  </div>
+
+  <footer>
+   SMART KIDS ADVENTURE
+   <b>CREATED BY MOH NATHAN ALMUSTAF</b>
+  </footer>
+ `;
+}
+
+function addAchievementNavigation(){
+ const navbar=document.querySelector(".navbar");
+ if(!navbar || navbar.innerHTML.includes("renderTab('achievements')")) return;
+
+ const button=document.createElement("button");
+ button.className="nav-btn";
+ button.innerHTML="🏆 REWARD";
+ button.onclick=()=>renderTab("achievements");
+ navbar.appendChild(button);
+}
+
+renderTab=function(tab){
+ if(tab==="achievements"){
+  renderAchievements();
+  return;
+ }
+
+ stage4RenderTab(tab);
+ addAchievementNavigation();
 };
 </script>
 
