@@ -556,6 +556,25 @@ footer b{
  font-size:12px;
  line-height:1.8;
 }
+.quiz-subject{
+ width:100%;
+ padding:16px;
+ margin-top:10px;
+ text-align:left;
+ color:white;
+ background:#211d27;
+ border:1px solid #563244;
+ border-radius:12px;
+}
+
+.quiz-subject b{
+ display:block;
+ margin-bottom:5px;
+}
+
+.quiz-subject small{
+ color:#bbaab5;
+}
 </style>
 </head>
 
@@ -1518,6 +1537,197 @@ const stage3RenderLearning=renderLearning;
 
 renderLearning=function(){
  stage3RenderLearning();
+ addQuizNavigation();
+};
+/* TAHAP 4 UPDATE - PILIH QUIZ SENDIRI */
+
+let selectedQuizSubject="all";
+
+function renderQuizMenu(){
+ document.getElementById("dashboard").innerHTML=`
+  <div class="topbar">
+   <h2>SMART <span>KIDS</span></h2>
+   <div class="status">QUIZ ARENA<br>SELECT ●</div>
+  </div>
+
+  <div class="navbar">
+   <button class="nav-btn" onclick="renderTab('home')">⌂ BERANDA</button>
+   <button class="nav-btn" onclick="renderTab('learn')">📚 BELAJAR</button>
+   <button class="nav-btn active">🎯 QUIZ</button>
+   <button class="nav-btn" onclick="renderTab('profile')">□ PROFIL</button>
+  </div>
+
+  <div class="quiz-box">
+   <h2>CHOOSE YOUR CHALLENGE</h2>
+   <p>Pilih mata pelajaran yang ingin kamu uji!</p>
+
+   <button class="quiz-subject" onclick="startQuiz('Pendidikan Pancasila')">
+    <b>🇮🇩 PENDIDIKAN PANCASILA</b>
+    <small>Uji pengetahuan Pancasila</small>
+   </button>
+
+   <button class="quiz-subject" onclick="startQuiz('Seni Budaya')">
+    <b>🎨 SENI BUDAYA</b>
+    <small>Uji kreativitas dan seni</small>
+   </button>
+
+   <button class="quiz-subject" onclick="startQuiz('Matematika')">
+    <b>🔢 MATEMATIKA</b>
+    <small>Uji kemampuan berhitung</small>
+   </button>
+
+   <button class="quiz-subject" onclick="startQuiz('BTQ')">
+    <b>📖 BTQ</b>
+    <small>Uji pengetahuan BTQ</small>
+   </button>
+
+   <button class="quiz-subject" onclick="startQuiz('PJOK')">
+    <b>⚽ PJOK</b>
+    <small>Uji pengetahuan olahraga</small>
+   </button>
+
+   <button class="learn-btn" onclick="startQuiz('all')">
+    🎮 SEMUA MATA PELAJARAN
+   </button>
+  </div>
+
+  <footer>
+   SMART KIDS ADVENTURE
+   <b>CREATED BY MOH NATHAN ALMUSTAF</b>
+  </footer>
+ `;
+}
+
+/* Ganti fungsi startQuiz lama */
+
+startQuiz=function(subject=selectedQuizSubject){
+ selectedQuizSubject=subject;
+
+ const available=subject==="all"
+  ?quizBank
+  :quizBank.filter(q=>q.subject===subject);
+
+ quizQuestions=shuffleQuestions(available).slice(0,15);
+
+ quizIndex=0;
+ quizCorrect=0;
+ quizWrong=0;
+ quizAnswered=false;
+ quizFinished=false;
+ quizLastWrongLesson=null;
+
+ renderQuiz();
+};
+
+/* Ganti tampilan soal agar jumlahnya menyesuaikan */
+
+renderQuiz=function(){
+ if(quizFinished){
+  renderQuizResult();
+  return;
+ }
+
+ const q=quizQuestions[quizIndex];
+ const total=quizQuestions.length;
+
+ document.getElementById("dashboard").innerHTML=`
+  <div class="topbar">
+   <h2>SMART <span>KIDS</span></h2>
+   <div class="status">QUIZ ARENA<br>ACTIVE ●</div>
+  </div>
+
+  <div class="navbar">
+   <button class="nav-btn" onclick="renderTab('home')">⌂ BERANDA</button>
+   <button class="nav-btn" onclick="renderTab('learn')">📚 BELAJAR</button>
+   <button class="nav-btn active" onclick="renderTab('quiz')">🎯 QUIZ</button>
+   <button class="nav-btn" onclick="renderTab('profile')">□ PROFIL</button>
+  </div>
+
+  <div class="quiz-score">
+   <div class="panel"><h3>${quizCorrect}</h3><p>BENAR</p></div>
+   <div class="panel"><h3>${quizWrong}/6</h3><p>SALAH</p></div>
+   <div class="panel"><h3>${quizIndex+1}/${total}</h3><p>SOAL</p></div>
+  </div>
+
+  <div class="quiz-box">
+   <div class="quiz-top">
+    <span>${q.subject}</span>
+    <span>QUESTION ${quizIndex+1}</span>
+   </div>
+
+   <div class="quiz-progress">
+    <div class="quiz-progress-fill"
+     style="width:${((quizIndex+1)/total)*100}%"></div>
+   </div>
+
+   <h2 class="quiz-question">${q.question}</h2>
+
+   ${q.options.map((option,index)=>`
+    <button class="quiz-option"
+     ${quizAnswered?"disabled":""}
+     onclick="answerQuiz(${index})">
+     ${String.fromCharCode(65+index)}. ${option}
+    </button>
+   `).join("")}
+
+   ${quizAnswered?`
+    <div class="quiz-feedback">
+     ${quizLastAnswerCorrect?
+      "✓ JAWABAN BENAR! +5 XP DAN +2 KOIN":
+      "✕ JAWABAN BELUM TEPAT. Pelajari kembali materinya."}
+    </div>
+
+    <button class="learn-btn"
+     onclick="${quizFinished?"renderQuizResult()":"nextQuizQuestion()"}">
+     ${quizFinished?"LIHAT HASIL":"SOAL BERIKUTNYA →"}
+    </button>
+   `:""}
+  </div>
+
+  <footer>
+   SMART KIDS ADVENTURE
+   <b>CREATED BY MOH NATHAN ALMUSTAF</b>
+  </footer>
+ `;
+};
+
+/* Ganti fungsi answerQuiz lama */
+
+answerQuiz=function(choice){
+ if(quizAnswered || quizFinished) return;
+
+ quizAnswered=true;
+
+ const q=quizQuestions[quizIndex];
+
+ if(choice===q.answer){
+  quizCorrect++;
+  quizLastAnswerCorrect=true;
+  data.xp+=5;
+  data.coins+=2;
+  saveData();
+ }else{
+  quizWrong++;
+  quizLastAnswerCorrect=false;
+  quizLastWrongLesson=q.lesson;
+ }
+
+ if(quizWrong>=6 || quizIndex===quizQuestions.length-1){
+  quizFinished=true;
+ }
+
+ renderQuiz();
+};
+
+/* Hubungkan menu quiz */
+
+renderTab=function(tab){
+ if(tab==="quiz"){
+  renderQuizMenu();
+  return;
+ }
+
+ stage3RenderTab(tab);
  addQuizNavigation();
 };
 </script>
