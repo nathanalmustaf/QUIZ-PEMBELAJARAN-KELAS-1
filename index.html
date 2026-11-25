@@ -701,6 +701,81 @@ footer b{
  text-align:center;
  padding:15px;
 }
+/* ELIMINATION ANIMATION */
+
+.elimination-screen{
+ position:relative;
+ overflow:hidden;
+ min-height:75vh;
+ background:radial-gradient(circle,#571321,#160b12 70%);
+ border:2px solid #ff3158;
+ border-radius:18px;
+ padding:25px 15px;
+ text-align:center;
+ animation:screenBreak .45s ease-out;
+}
+
+.elimination-screen:before{
+ content:"";
+ position:absolute;
+ inset:0;
+ pointer-events:none;
+ background:linear-gradient(90deg,transparent,rgba(255,0,45,.35),transparent);
+ animation:redFlash .8s infinite;
+}
+
+.crack-glass{
+ position:absolute;
+ inset:0;
+ width:100%;
+ height:100%;
+ pointer-events:none;
+}
+
+.crack-glass path{
+ fill:none;
+ stroke:#fff;
+ stroke-width:2;
+ opacity:.8;
+}
+
+.game-over-title{
+ position:relative;
+ color:#ff3158;
+ font-size:clamp(35px,10vw,60px);
+ font-weight:1000;
+ text-shadow:0 0 15px #ff1744;
+ animation:glitchText .25s infinite alternate;
+ margin-top:70px;
+}
+
+.game-over-subtitle{
+ position:relative;
+ color:white;
+ font-size:15px;
+ margin:15px 0 25px;
+}
+
+.elimination-screen button{
+ position:relative;
+ z-index:2;
+}
+
+@keyframes screenBreak{
+ 0%{transform:scale(1.08);filter:brightness(3)}
+ 50%{transform:scale(.98);filter:brightness(.5)}
+ 100%{transform:scale(1);filter:brightness(1)}
+}
+
+@keyframes redFlash{
+ 0%,100%{opacity:.1}
+ 50%{opacity:.8}
+}
+
+@keyframes glitchText{
+ 0%{transform:translateX(-2px)}
+ 100%{transform:translateX(2px)}
+}
 </style>
 </head>
 
@@ -2301,6 +2376,97 @@ renderTab=function(tab){
  stage5RenderTab(tab);
  addStage6Navigation();
 };
+/* ELIMINATION ANIMATION - 6 WRONG ANSWERS */
+
+const normalQuizResultBeforeElimination = renderQuizResult;
+
+function playEliminationAlarm(){
+ try{
+  const AudioCtx=window.AudioContext||window.webkitAudioContext;
+  if(!AudioCtx)return;
+
+  const audio=new AudioCtx();
+
+  [440,330,220].forEach((frequency,index)=>{
+   const oscillator=audio.createOscillator();
+   const gain=audio.createGain();
+
+   oscillator.type="sawtooth";
+   oscillator.frequency.value=frequency;
+
+   gain.gain.setValueAtTime(.0001,audio.currentTime+index*.18);
+   gain.gain.exponentialRampToValueAtTime(
+    .12,audio.currentTime+index*.18+.04
+   );
+   gain.gain.exponentialRampToValueAtTime(
+    .0001,audio.currentTime+index*.18+.3
+   );
+
+   oscillator.connect(gain);
+   gain.connect(audio.destination);
+
+   oscillator.start(audio.currentTime+index*.18);
+   oscillator.stop(audio.currentTime+index*.18+.32);
+  });
+
+  setTimeout(()=>audio.close(),1200);
+ }catch(error){
+  console.log("Audio tidak tersedia");
+ }
+}
+
+function showEliminationScreen(){
+ const dashboard=document.getElementById("dashboard");
+
+ dashboard.innerHTML=`
+  <div class="elimination-screen">
+
+   <svg class="crack-glass" viewBox="0 0 400 650"
+    preserveAspectRatio="none">
+    <path d="M200 0 L185 100 L225 170 L175 250 L210 330 L160 420 L190 520 L150 650"/>
+    <path d="M185 100 L90 140 L35 220"/>
+    <path d="M225 170 L320 120 L390 170"/>
+    <path d="M175 250 L75 290 L15 360"/>
+    <path d="M210 330 L300 370 L390 340"/>
+    <path d="M160 420 L75 470 L15 540"/>
+    <path d="M190 520 L280 560 L370 630"/>
+   </svg>
+
+   <div class="game-over-title">GAME OVER</div>
+
+   <div class="game-over-subtitle">
+    <h2>○ △ □</h2>
+    <p>BATAS KESALAHAN TERCAPAI</p>
+    <p>Jawaban salah: ${quizWrong}/6</p>
+    <p>Jangan menyerah! Coba tantangan lagi.</p>
+   </div>
+
+   <button class="learn-btn" onclick="retryEliminationQuiz()">
+    ↻ COBA LAGI
+   </button>
+
+   <button class="nav-btn" onclick="renderQuizMenu()">
+    KEMBALI PILIH QUIZ
+   </button>
+
+  </div>
+ `;
+
+ playEliminationAlarm();
+}
+
+renderQuizResult=function(){
+ if(quizWrong>=6){
+  showEliminationScreen();
+  return;
+ }
+
+ normalQuizResultBeforeElimination();
+};
+
+function retryEliminationQuiz(){
+ startQuiz(selectedQuizSubject||"all");
+}
 </script>
 
 </body>
