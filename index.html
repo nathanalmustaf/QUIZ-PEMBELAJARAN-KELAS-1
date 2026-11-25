@@ -762,7 +762,249 @@ document.getElementById("loginButton").addEventListener("click",login);
 document.getElementById("playerName").addEventListener("keydown",function(e){
  if(e.key==="Enter") login();
 });
+/* =================================
+   TAHAP 3 - LEARNING ARENA
+================================= */
 
+const stage2RenderTab = renderTab;
+
+let selectedSubject = "";
+let selectedLesson = null;
+
+const lessonData = [
+ {
+  id:"p1", subject:"pancasila", title:"Mengenal Pancasila",
+  description:"Pancasila adalah dasar negara Indonesia. Pancasila memiliki lima sila yang menjadi pedoman kehidupan masyarakat.",
+  example:"Contoh: Menghormati teman yang berbeda agama dan membantu teman yang membutuhkan."
+ },
+ {
+  id:"p2", subject:"pancasila", title:"Lambang Pancasila",
+  description:"Setiap sila Pancasila memiliki lambang pada perisai Garuda Pancasila.",
+  example:"Bintang melambangkan sila pertama, rantai melambangkan sila kedua, dan pohon beringin melambangkan sila ketiga."
+ },
+ {
+  id:"p3", subject:"pancasila", title:"Pancasila di Sekolah",
+  description:"Nilai Pancasila bisa diterapkan setiap hari di sekolah, seperti bekerja sama, menghargai teman, dan menaati aturan.",
+  example:"Contoh: Melaksanakan piket kelas bersama-sama."
+ },
+ {
+  id:"s1", subject:"seni", title:"Mengenal Garis dan Bentuk",
+  description:"Garis dan bentuk merupakan unsur penting dalam menggambar. Ada garis lurus, lengkung, zigzag, serta bentuk lingkaran dan segitiga.",
+  example:"Contoh: Menggambar rumah menggunakan persegi dan segitiga."
+ },
+ {
+  id:"s2", subject:"seni", title:"Mengenal Warna",
+  description:"Warna primer terdiri dari merah, kuning, dan biru. Warna tersebut dapat dicampur untuk menghasilkan warna lain.",
+  example:"Contoh: Merah dicampur kuning menghasilkan warna jingga."
+ },
+ {
+  id:"s3", subject:"seni", title:"Membuat Kolase",
+  description:"Kolase adalah karya seni yang dibuat dengan menempelkan berbagai bahan pada sebuah bidang gambar.",
+  example:"Contoh: Membuat gambar bunga dari potongan kertas warna."
+ },
+ {
+  id:"m1", subject:"matematika", title:"Mengenal Bilangan",
+  description:"Bilangan digunakan untuk menghitung jumlah benda. Setiap angka memiliki nilai tempat, seperti satuan, puluhan, dan ratusan.",
+  example:"Contoh: Angka 345 terdiri dari 3 ratusan, 4 puluhan, dan 5 satuan."
+ },
+ {
+  id:"m2", subject:"matematika", title:"Penjumlahan dan Pengurangan",
+  description:"Penjumlahan digunakan untuk menggabungkan jumlah. Pengurangan digunakan untuk mencari selisih atau sisa.",
+  example:"Contoh: 25 + 10 = 35. Sedangkan 35 - 10 = 25."
+ },
+ {
+  id:"m3", subject:"matematika", title:"Mengenal Perkalian",
+  description:"Perkalian adalah penjumlahan berulang dengan bilangan yang sama.",
+  example:"Contoh: 3 × 4 sama dengan 4 + 4 + 4 = 12."
+ },
+ {
+  id:"b1", subject:"btq", title:"Huruf Hijaiyah",
+  description:"Huruf hijaiyah adalah huruf yang digunakan dalam bahasa Arab dan untuk membaca Al-Qur'an.",
+  example:"Contoh: ا (Alif), ب (Ba), ت (Ta), ث (Tsa)."
+ },
+ {
+  id:"b2", subject:"btq", title:"Mengenal Harakat",
+  description:"Harakat adalah tanda baca pada huruf Arab. Harakat membantu kita mengetahui bunyi huruf.",
+  example:"Contoh: Fathah berbunyi a, kasrah berbunyi i, dan dammah berbunyi u."
+ },
+ {
+  id:"b3", subject:"btq", title:"Adab Membaca Al-Qur'an",
+  description:"Membaca Al-Qur'an sebaiknya dilakukan dengan sopan, bersih, tenang, dan penuh rasa hormat.",
+  example:"Contoh: Berwudu sebelum membaca Al-Qur'an dan menjaga kebersihan tempat membaca."
+ },
+ {
+  id:"j1", subject:"pjok", title:"Pemanasan Sebelum Olahraga",
+  description:"Pemanasan dilakukan sebelum olahraga untuk mempersiapkan tubuh agar siap bergerak.",
+  example:"Contoh: Menggerakkan tangan, memutar bahu, dan berjalan santai."
+ },
+ {
+  id:"j2", subject:"pjok", title:"Gerak Lokomotor",
+  description:"Gerak lokomotor adalah gerakan yang membuat tubuh berpindah tempat.",
+  example:"Contoh: Berjalan, berlari, melompat, dan meloncat."
+ },
+ {
+  id:"j3", subject:"pjok", title:"Menjaga Kebersihan Tubuh",
+  description:"Menjaga kebersihan tubuh membantu kita tetap sehat dan nyaman saat beraktivitas.",
+  example:"Contoh: Mandi teratur, mencuci tangan, dan memakai pakaian bersih."
+ }
+];
+
+const subjectData = [
+ {id:"pancasila",name:"Pendidikan Pancasila",icon:"🇮🇩",desc:"Belajar nilai Pancasila"},
+ {id:"seni",name:"Seni Budaya",icon:"🎨",desc:"Belajar seni dan kreativitas"},
+ {id:"matematika",name:"Matematika",icon:"🔢",desc:"Belajar angka dan hitungan"},
+ {id:"btq",name:"BTQ",icon:"📖",desc:"Belajar baca tulis Al-Qur'an"},
+ {id:"pjok",name:"PJOK",icon:"⚽",desc:"Belajar olahraga dan kesehatan"}
+];
+
+function showSubject(id){
+ selectedSubject=id;
+ selectedLesson=null;
+ renderLearning();
+}
+
+function openLesson(id){
+ selectedLesson=lessonData.find(item=>item.id===id);
+ renderLearning();
+}
+
+function backToLessons(){
+ selectedLesson=null;
+ renderLearning();
+}
+
+function backToSubjects(){
+ selectedSubject="";
+ selectedLesson=null;
+ renderLearning();
+}
+
+function completeLesson(id){
+ if(!data.lessonDone.includes(id)){
+  data.lessonDone.push(id);
+  saveData();
+  alert("MATERI BERHASIL DISELESAIKAN!");
+ }
+ renderLearning();
+}
+
+function renderLearning(){
+ let content="";
+
+ if(selectedLesson){
+  const done=data.lessonDone.includes(selectedLesson.id);
+
+  content=`
+   <div class="lesson-detail">
+    <small>LEARNING MATERIAL</small>
+    <h2>${selectedLesson.title}</h2>
+    <p>${selectedLesson.description}</p>
+
+    <div class="example-box">
+     <b>CONTOH:</b><br>
+     ${selectedLesson.example}
+    </div>
+
+    ${done?`
+     <p class="done-label">✓ MATERI SUDAH SELESAI</p>
+    `:`
+     <button class="learn-btn"
+      onclick="completeLesson('${selectedLesson.id}')">
+      SELESAIKAN MATERI
+     </button>
+    `}
+
+    <button class="back-btn" onclick="backToLessons()">
+     ← KEMBALI KE MATERI
+    </button>
+   </div>`;
+ }else if(selectedSubject){
+  const subject=subjectData.find(item=>item.id===selectedSubject);
+  const lessons=lessonData.filter(item=>item.subject===selectedSubject);
+
+  content=`
+   <h2>△ ${subject.name}</h2>
+   <p>Pilih materi yang ingin kamu pelajari.</p>
+   <button class="back-btn" onclick="backToSubjects()">← SEMUA PELAJARAN</button>
+
+   ${lessons.map(item=>`
+    <div class="lesson-card">
+     <h3>${item.title}</h3>
+     <p>${data.lessonDone.includes(item.id)?"✓ SUDAH SELESAI":"BELUM DIPELAJARI"}</p>
+     <button class="learn-btn" onclick="openLesson('${item.id}')">
+      BUKA MATERI
+     </button>
+    </div>
+   `).join("")}`;
+ }else{
+  content=`
+   <h2>○ LEARNING ARENA</h2>
+   <p>Pilih mata pelajaran untuk memulai petualangan belajar!</p>
+   <div class="subject-grid">
+    ${subjectData.map(item=>`
+     <button class="subject-card" onclick="showSubject('${item.id}')">
+      <span style="font-size:27px">${item.icon}</span>
+      <b>${item.name}</b>
+      <small>${item.desc}</small>
+     </button>
+    `).join("")}
+   </div>`;
+ }
+
+ document.getElementById("dashboard").innerHTML=`
+  <div class="topbar">
+   <h2>SMART <span>KIDS</span></h2>
+   <div class="status">PLAYER STATUS<br>ACTIVE ●</div>
+  </div>
+
+  <div class="profile">
+   <div class="avatar">🎭</div>
+   <div class="profile-info">
+    <small>PLAYER PROFILE</small>
+    <b>${safe(player.toUpperCase())}</b>
+   </div>
+   <span style="color:#00dfa0">●</span>
+  </div>
+
+  <div class="navbar">
+   <button class="nav-btn" onclick="renderTab('home')">⌂ BERANDA</button>
+   <button class="nav-btn active" onclick="renderTab('learn')">📚 BELAJAR</button>
+   <button class="nav-btn" onclick="renderTab('mission')">△ MISI</button>
+   <button class="nav-btn" onclick="renderTab('profile')">□ PROFIL</button>
+  </div>
+
+  ${content}
+
+  <footer>
+   SMART KIDS ADVENTURE
+   <b>CREATED BY MOH NATHAN ALMUSTAF</b>
+  </footer>
+ `;
+}
+
+/* Menghubungkan menu belajar dengan Tahap 2 */
+
+renderTab = function(tab){
+ if(tab==="learn"){
+  selectedSubject="";
+  selectedLesson=null;
+  renderLearning();
+  return;
+ }
+
+ stage2RenderTab(tab);
+
+ const nav=document.querySelector(".navbar");
+
+ if(nav){
+  nav.innerHTML=`
+   <button class="nav-btn ${tab==="home"?"active":""}" onclick="renderTab('home')">⌂ BERANDA</button>
+   <button class="nav-btn" onclick="renderTab('learn')">📚 BELAJAR</button>
+   <button class="nav-btn ${tab==="mission"?"active":""}" onclick="renderTab('mission')">△ MISI</button>
+   <button class="nav-btn ${tab==="profile"?"active":""}" onclick="renderTab('profile')">□ PROFIL</button>
+  `;
+ }
+};
 </script>
 
 </body>
