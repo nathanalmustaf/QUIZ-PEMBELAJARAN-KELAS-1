@@ -456,6 +456,106 @@ footer b{
  font-size:10px;
  font-weight:bold;
 }
+/* TAHAP 4 - QUIZ CHALLENGE */
+
+.quiz-box{
+ background:#211d27;
+ border:1px solid #563244;
+ border-radius:15px;
+ padding:18px;
+ margin-top:14px;
+}
+
+.quiz-top{
+ display:flex;
+ justify-content:space-between;
+ gap:8px;
+ font-size:11px;
+ color:#c7b9c3;
+}
+
+.quiz-progress{
+ height:8px;
+ background:#100b10;
+ border-radius:20px;
+ overflow:hidden;
+ margin:14px 0;
+}
+
+.quiz-progress-fill{
+ height:100%;
+ background:linear-gradient(90deg,#a91d46,#f02d70);
+}
+
+.quiz-question{
+ font-size:17px;
+ line-height:1.6;
+ margin:18px 0;
+}
+
+.quiz-option{
+ display:block;
+ width:100%;
+ text-align:left;
+ padding:14px;
+ margin-top:9px;
+ border:1px solid #563244;
+ border-radius:10px;
+ background:#302432;
+ color:white;
+ font-size:12px;
+}
+
+.quiz-option:disabled{
+ opacity:.7;
+}
+
+.quiz-feedback{
+ margin-top:14px;
+ padding:13px;
+ border-radius:9px;
+ background:#302432;
+ font-size:12px;
+ line-height:1.7;
+}
+
+.quiz-score{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:8px;
+ margin-top:12px;
+}
+
+.quiz-score .panel{
+ text-align:center;
+ padding:12px 5px;
+}
+
+.quiz-score h3{
+ color:#f02d70;
+ font-family:Orbitron;
+}
+
+.quiz-result{
+ text-align:center;
+ padding:22px 15px;
+ background:#211d27;
+ border:1px solid #a91d46;
+ border-radius:15px;
+ margin-top:15px;
+}
+
+.quiz-result h2{
+ font-family:Anton;
+ font-size:27px;
+ margin-bottom:12px;
+}
+
+.quiz-result p{
+ color:#c7b9c3;
+ font-size:12px;
+ line-height:1.8;
+}
 </style>
 </head>
 
@@ -1004,6 +1104,421 @@ renderTab = function(tab){
    <button class="nav-btn ${tab==="profile"?"active":""}" onclick="renderTab('profile')">□ PROFIL</button>
   `;
  }
+};
+/* =================================
+   TAHAP 4 - QUIZ CHALLENGE
+================================= */
+
+const stage3RenderTab = renderTab;
+
+let quizQuestions = [];
+let quizIndex = 0;
+let quizCorrect = 0;
+let quizWrong = 0;
+let quizAnswered = false;
+let quizFinished = false;
+let quizLastWrongLesson = null;
+
+const quizBank = [
+ {
+  subject:"Pendidikan Pancasila",
+  lesson:"p1",
+  question:"Berapa jumlah sila dalam Pancasila?",
+  options:["Tiga","Empat","Lima","Enam"],
+  answer:2
+ },
+ {
+  subject:"Pendidikan Pancasila",
+  lesson:"p2",
+  question:"Apa lambang sila pertama Pancasila?",
+  options:["Bintang","Rantai","Pohon beringin","Kepala banteng"],
+  answer:0
+ },
+ {
+  subject:"Pendidikan Pancasila",
+  lesson:"p3",
+  question:"Contoh sikap gotong royong di sekolah adalah...",
+  options:["Mengerjakan tugas teman","Piket kelas bersama","Membuang sampah sembarangan","Mengganggu teman"],
+  answer:1
+ },
+ {
+  subject:"Pendidikan Pancasila",
+  lesson:"p1",
+  question:"Apa dasar negara Indonesia?",
+  options:["Pancasila","Bendera","Lagu daerah","Bahasa asing"],
+  answer:0
+ },
+ {
+  subject:"Seni Budaya",
+  lesson:"s1",
+  question:"Bentuk yang memiliki tiga sisi disebut...",
+  options:["Lingkaran","Persegi","Segitiga","Persegi panjang"],
+  answer:2
+ },
+ {
+  subject:"Seni Budaya",
+  lesson:"s2",
+  question:"Warna primer adalah...",
+  options:["Hijau, ungu, jingga","Merah, kuning, biru","Hitam, putih, abu-abu","Merah, hijau, ungu"],
+  answer:1
+ },
+ {
+  subject:"Seni Budaya",
+  lesson:"s3",
+  question:"Karya seni dengan cara menempelkan berbagai bahan disebut...",
+  options:["Patung","Kolase","Tarian","Lagu"],
+  answer:1
+ },
+ {
+  subject:"Seni Budaya",
+  lesson:"s2",
+  question:"Campuran warna merah dan kuning menghasilkan...",
+  options:["Hijau","Ungu","Jingga","Biru"],
+  answer:2
+ },
+ {
+  subject:"Matematika",
+  lesson:"m1",
+  question:"Angka 5 pada bilangan 352 menempati nilai...",
+  options:["Satuan","Puluhan","Ratusan","Ribuan"],
+  answer:1
+ },
+ {
+  subject:"Matematika",
+  lesson:"m2",
+  question:"Hasil dari 25 + 17 adalah...",
+  options:["32","40","42","43"],
+  answer:2
+ },
+ {
+  subject:"Matematika",
+  lesson:"m2",
+  question:"Hasil dari 60 - 25 adalah...",
+  options:["25","30","35","45"],
+  answer:2
+ },
+ {
+  subject:"Matematika",
+  lesson:"m3",
+  question:"Hasil dari 4 × 5 adalah...",
+  options:["9","15","20","25"],
+  answer:2
+ },
+ {
+  subject:"BTQ",
+  lesson:"b1",
+  question:"Huruf hijaiyah pertama adalah...",
+  options:["Ba","Alif","Ta","Jim"],
+  answer:1
+ },
+ {
+  subject:"BTQ",
+  lesson:"b2",
+  question:"Harakat fathah menghasilkan bunyi...",
+  options:["A","I","U","An"],
+  answer:0
+ },
+ {
+  subject:"BTQ",
+  lesson:"b2",
+  question:"Harakat kasrah menghasilkan bunyi...",
+  options:["A","I","U","O"],
+  answer:1
+ },
+ {
+  subject:"BTQ",
+  lesson:"b3",
+  question:"Salah satu adab membaca Al-Qur'an adalah...",
+  options:["Bermain saat membaca","Menjaga kebersihan","Berteriak","Bercanda terus"],
+  answer:1
+ },
+ {
+  subject:"PJOK",
+  lesson:"j1",
+  question:"Apa tujuan melakukan pemanasan sebelum olahraga?",
+  options:["Mempersiapkan tubuh","Membuat tubuh mengantuk","Menghentikan olahraga","Menghindari gerakan"],
+  answer:0
+ },
+ {
+  subject:"PJOK",
+  lesson:"j2",
+  question:"Berjalan termasuk gerak...",
+  options:["Nonlokomotor","Lokomotor","Diam","Keseimbangan saja"],
+  answer:1
+ },
+ {
+  subject:"PJOK",
+  lesson:"j2",
+  question:"Manakah yang termasuk gerak lokomotor?",
+  options:["Duduk","Berdiri diam","Berlari","Memutar pergelangan tangan"],
+  answer:2
+ },
+ {
+  subject:"PJOK",
+  lesson:"j3",
+  question:"Kapan sebaiknya kita mencuci tangan?",
+  options:["Hanya saat malam","Sebelum makan dan setelah dari toilet","Hanya saat bermain","Tidak perlu mencuci tangan"],
+  answer:1
+ }
+];
+
+function shuffleQuestions(list){
+ const result=[...list];
+
+ for(let i=result.length-1;i>0;i--){
+  const j=Math.floor(Math.random()*(i+1));
+  [result[i],result[j]]=[result[j],result[i]];
+ }
+
+ return result;
+}
+
+function startQuiz(){
+ quizQuestions=shuffleQuestions(quizBank).slice(0,15);
+ quizIndex=0;
+ quizCorrect=0;
+ quizWrong=0;
+ quizAnswered=false;
+ quizFinished=false;
+ quizLastWrongLesson=null;
+
+ renderQuiz();
+}
+
+function renderQuiz(){
+ if(quizFinished){
+  renderQuizResult();
+  return;
+ }
+
+ const q=quizQuestions[quizIndex];
+
+ document.getElementById("dashboard").innerHTML=`
+  <div class="topbar">
+   <h2>SMART <span>KIDS</span></h2>
+   <div class="status">QUIZ ARENA<br>ACTIVE ●</div>
+  </div>
+
+  <div class="navbar">
+   <button class="nav-btn" onclick="renderTab('home')">⌂ BERANDA</button>
+   <button class="nav-btn" onclick="renderTab('learn')">📚 BELAJAR</button>
+   <button class="nav-btn active">🎯 QUIZ</button>
+   <button class="nav-btn" onclick="renderTab('profile')">□ PROFIL</button>
+  </div>
+
+  <div class="quiz-score">
+   <div class="panel">
+    <h3>${quizCorrect}</h3>
+    <p>BENAR</p>
+   </div>
+   <div class="panel">
+    <h3>${quizWrong}/6</h3>
+    <p>SALAH</p>
+   </div>
+   <div class="panel">
+    <h3>${quizIndex+1}/15</h3>
+    <p>SOAL</p>
+   </div>
+  </div>
+
+  <div class="quiz-box">
+   <div class="quiz-top">
+    <span>${q.subject}</span>
+    <span>QUESTION ${quizIndex+1}</span>
+   </div>
+
+   <div class="quiz-progress">
+    <div class="quiz-progress-fill"
+     style="width:${((quizIndex+1)/15)*100}%">
+    </div>
+   </div>
+
+   <h2 class="quiz-question">${q.question}</h2>
+
+   ${q.options.map((option,index)=>`
+    <button class="quiz-option"
+     ${quizAnswered?"disabled":""}
+     onclick="answerQuiz(${index})">
+     ${String.fromCharCode(65+index)}. ${option}
+    </button>
+   `).join("")}
+
+   ${quizAnswered?`
+    <div class="quiz-feedback">
+     ${quizLastAnswerCorrect?
+      "✓ JAWABAN BENAR! Kamu mendapatkan 5 XP dan 2 koin.":
+      "✕ JAWABAN BELUM TEPAT. Pelajari kembali materi yang berkaitan."}
+    </div>
+
+    ${quizFinished?`
+     <button class="learn-btn" onclick="renderQuizResult()">
+      LIHAT HASIL
+     </button>
+    `:`
+     <button class="learn-btn" onclick="nextQuizQuestion()">
+      SOAL BERIKUTNYA →
+     </button>
+    `}
+   `:""}
+  </div>
+
+  <footer>
+   SMART KIDS ADVENTURE
+   <b>CREATED BY MOH NATHAN ALMUSTAF</b>
+  </footer>
+ `;
+}
+
+let quizLastAnswerCorrect=false;
+
+function answerQuiz(choice){
+ if(quizAnswered || quizFinished) return;
+
+ quizAnswered=true;
+
+ const q=quizQuestions[quizIndex];
+
+ if(choice===q.answer){
+  quizCorrect++;
+  quizLastAnswerCorrect=true;
+
+  data.xp+=5;
+  data.coins+=2;
+  saveData();
+ }else{
+  quizWrong++;
+  quizLastAnswerCorrect=false;
+  quizLastWrongLesson=q.lesson;
+ }
+
+ if(quizWrong>=6 || quizIndex===14){
+  quizFinished=true;
+ }
+
+ renderQuiz();
+}
+
+function nextQuizQuestion(){
+ if(!quizAnswered || quizFinished) return;
+
+ quizIndex++;
+ quizAnswered=false;
+
+ renderQuiz();
+}
+
+function renderQuizResult(){
+ const passed=quizWrong<6 && quizCorrect>0;
+ const lesson=lessonData.find(
+  item=>item.id===quizLastWrongLesson
+ );
+
+ document.getElementById("dashboard").innerHTML=`
+  <div class="topbar">
+   <h2>SMART <span>KIDS</span></h2>
+   <div class="status">QUIZ ARENA<br>RESULT ●</div>
+  </div>
+
+  <div class="quiz-result">
+   <div style="font-size:48px">
+    ${quizWrong>=6?"🎮":"🏆"}
+   </div>
+
+   <h2>${quizWrong>=6?"GAME OVER":"CHALLENGE SELESAI"}</h2>
+
+   <p>
+    ${quizWrong>=6?
+     "Kamu mencapai batas 6 jawaban salah. Jangan menyerah, pelajari materinya dan coba lagi!":
+     "Kamu berhasil menyelesaikan 15 soal. Terus tingkatkan kemampuanmu!"}
+   </p>
+
+   <div class="quiz-score">
+    <div class="panel">
+     <h3>${quizCorrect}</h3>
+     <p>BENAR</p>
+    </div>
+    <div class="panel">
+     <h3>${quizWrong}</h3>
+     <p>SALAH</p>
+    </div>
+    <div class="panel">
+     <h3>${quizCorrect*5}</h3>
+     <p>XP DIDAPAT</p>
+    </div>
+   </div>
+
+   ${lesson?`
+    <div class="example-box">
+     <b>REKOMENDASI BELAJAR</b><br>
+     Kamu bisa mengulang materi: ${lesson.title}
+     <button class="learn-btn" onclick="reviewQuizLesson()">
+      PELAJARI MATERI
+     </button>
+    </div>
+   `:""}
+
+   <button class="learn-btn" onclick="startQuiz()">
+    MAIN LAGI
+   </button>
+
+   <button class="back-btn" onclick="renderTab('home')">
+    KEMBALI KE BERANDA
+   </button>
+  </div>
+
+  <footer>
+   SMART KIDS ADVENTURE
+   <b>CREATED BY MOH NATHAN ALMUSTAF</b>
+  </footer>
+ `;
+}
+
+function reviewQuizLesson(){
+ const lesson=lessonData.find(
+  item=>item.id===quizLastWrongLesson
+ );
+
+ if(!lesson) return;
+
+ selectedSubject=lesson.subject;
+ selectedLesson=lesson;
+
+ renderLearning();
+}
+
+/* HUBUNGKAN QUIZ KE MENU UTAMA */
+
+function addQuizNavigation(){
+ const nav=document.querySelector(".navbar");
+
+ if(!nav) return;
+
+ nav.innerHTML=`
+  <button class="nav-btn" onclick="renderTab('home')">⌂ BERANDA</button>
+  <button class="nav-btn" onclick="renderTab('learn')">📚 BELAJAR</button>
+  <button class="nav-btn" onclick="renderTab('quiz')">🎯 QUIZ</button>
+  <button class="nav-btn" onclick="renderTab('mission')">△ MISI</button>
+  <button class="nav-btn" onclick="renderTab('profile')">□ PROFIL</button>
+ `;
+}
+
+renderTab=function(tab){
+ if(tab==="quiz"){
+  startQuiz();
+  return;
+ }
+
+ stage3RenderTab(tab);
+ addQuizNavigation();
+};
+
+/* Tambahkan menu quiz pada tampilan belajar */
+
+const stage3RenderLearning=renderLearning;
+
+renderLearning=function(){
+ stage3RenderLearning();
+ addQuizNavigation();
 };
 </script>
 
